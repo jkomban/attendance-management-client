@@ -1,18 +1,15 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
-import Header from '../components/Header';
-import LandingPage from '../components/LandingPage';
+import Dashboard from '../components/Dashboard';
+import Classes from '../components/Classes';
 
 const Routes = () => (
-    <BrowserRouter basename="/">
-        <div>
-            <Switch>
-                <Route path="/" component={LandingPage} exact={true}></Route>
-                <PrivateRoute path="/header" component={Header} ></PrivateRoute>
-            </Switch>
-        </div>
-    </BrowserRouter >
+
+    <Switch>
+        <PrivateRoute path="/dashboard" component={Dashboard} ></PrivateRoute>
+        <PrivateRoute path="/classes" component={Classes} ></PrivateRoute>
+    </Switch>
 )
 
 export default Routes;
