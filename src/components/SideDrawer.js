@@ -27,7 +27,7 @@ export const SideDrawer = ({ open, toggleDrawer }) => {
             <MenuItem
                 listIcon={<School />}
                 listText='Student'
-                routePath={'/student'}
+                routePath={'/students'}
                 appTitle='Student Management'
                 toggleDrawer={toggleDrawer}>
             </MenuItem>
