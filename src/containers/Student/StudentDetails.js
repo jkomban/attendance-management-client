@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
-import MUIDatatable from "mui-datatables";
+import MUIDatatable from 'mui-datatables';
 
 const styles = theme => ({
     root: {

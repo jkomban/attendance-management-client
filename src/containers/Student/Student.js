@@ -23,6 +23,8 @@ class Student extends Component {
         super(props)
         this.id = 0;
         this.classes = props.classes;
+        this.currentRowSelected = []
+        this.allRowsSelected = []
         this.state = {
             selectedClassId: 1,
             selectedBatchId: 2010,
@@ -51,7 +53,7 @@ class Student extends Component {
             ])
         })
         console.log(this.data)
-        this.setState({ studentsList: _studentsList, tableData:this.data })
+        this.setState({ studentsList: _studentsList, tableData: this.data })
 
 
     }
@@ -59,13 +61,32 @@ class Student extends Component {
     onRowClickHandler = (rowData, rowMeta) => {
         console.log(`Row clicked -- ${rowData}`)
         console.log(rowMeta)
+        if (this.allRowsSelected.length !== 0) {
+            console.log(`There are selected rows`);
+        } else {
+            console.log(`No rows selected`)
+            const selectedRow = this.state.tableData[rowMeta.dataIndex]
+            console.log(`Selected ID:${selectedRow[0]}`)
+            const selectedUser = this.state.studentsList.find(student => {
+                if (student.studentId === selectedRow[0])
+                    return student
+            })
+            console.log(selectedUser)
+            this.setState({ selectedTab: 1, selectedUserDetails: selectedUser })
+            console.log(`Cell Clicked - retreiving information for ${selectedUser.studentId}-${selectedUser.name.firstName}`)
+        }
+    }
+    onRowsSelectHandler = (currentRowSelected, allRowsSelected) => {
+        console.log(`Inside Row selected`)
+        this.currentRowSelected = currentRowSelected
+        this.allRowsSelected = allRowsSelected
     }
     onCellClickHandler = (colData, cellMeta) => {
-        const selectedUser = this.state.studentsList[cellMeta.rowIndex]
-        console.log(selectedUser)
-        this.setState({ selectedTab: 1, selectedUserDetails: selectedUser })
-        console.log(`Cell Clicked - retreiving information for ${selectedUser.studentId}-${selectedUser.name.firstName}`)
-
+        // console.log(colData)
+        // console.log(cellMeta)
+        console.log(`Cell Clicked`)
+        /* */
+        // cellmeta doesn't have dataIndex to identify correct data after sorting
     }
 
     onTabChangeHandler = (event, value) => {
@@ -75,10 +96,12 @@ class Student extends Component {
             this.setState({ selectedTab: value })
     }
 
+
     tableOptions = {
         filterType: 'checkbox',
         onRowClick: this.onRowClickHandler,
-        onCellClick: this.onCellClickHandler
+        onCellClick: this.onCellClickHandler,
+        onRowsSelect: this.onRowsSelectHandler
     }
 
     dropdownHandler = (event) => {
@@ -105,7 +128,7 @@ class Student extends Component {
                     data={this.state.tableData}
                     options={this.tableOptions}
                 />}
-                {this.state.selectedTab === 1 && <StudentAdd data={this.state.selectedUserDetails}/>}
+                {this.state.selectedTab === 1 && <StudentAdd data={this.state.selectedUserDetails} />}
 
 
             </div>
