@@ -6,6 +6,7 @@ import { MuiPickersUtilsProvider, InlineDatePicker } from 'material-ui-pickers'
 import Address from '../../components/Address'
 import Name from '../../components/Name'
 import Gender from '../../components/Gender'
+import Email from '../../components/Email'
 
 const styles = {
     textField: {
@@ -49,7 +50,7 @@ class StudentAdd extends Component {
                 lastName: (this.data && this.data.name.lastName) || ''
             },
             dob: (this.data && this.data.dob) || undefined,
-            email: (this.data && this.data.email) || '',
+            emailID: (this.data && this.data.email) || '',
             gender: (this.data && this.data.gender) || 'F',
             address: {
                 addressline1: (this.data && this.data.address.addressline1) || '',
@@ -118,6 +119,15 @@ class StudentAdd extends Component {
         console.log(newFormDataState)
     }
 
+    emailIDChangeHandler = (event) => {
+        event.preventDefault()
+        const targetName = event.target.name
+        const targetValue = event.target.value
+        console.log(`Inside emailIDChangeHandler() - emailID[${targetValue}]`)
+        const newFormDataState = Object.assign({}, this.state.formData, { emailID: targetValue })
+        this.setState({ formData: newFormDataState })
+    }
+
     getForm = () => {
         return (
             <Paper>
@@ -147,16 +157,22 @@ class StudentAdd extends Component {
                         />
                     </MuiPickersUtilsProvider>
 
-                    <TextField
+
+                </div>
+
+                {/* <TextField
                         id="emaild-id"
                         name="email"
                         label="Email ID"
                         value={(this.state.formData && this.state.formData.email)}
                         className={this.classes.textField}
                         margin="normal"
-                    />
-                </div>
-
+                    /> */}
+                <Email
+                    data={this.state.formData && this.state.formData.emailID}
+                    handleChange={this.emailIDChangeHandler}
+                    classes ={this.classes}
+                />
 
                 <Address
                     data={this.state.formData && this.state.formData.address}
