@@ -171,7 +171,7 @@ class StudentAdd extends Component {
                 <Email
                     data={this.state.formData && this.state.formData.emailID}
                     handleChange={this.emailIDChangeHandler}
-                    classes ={this.classes}
+                    classes={this.classes}
                 />
 
                 <Address
