@@ -37,8 +37,8 @@ class Student extends Component {
         this.data = []
     }
 
-    componentDidMount() {
-        const _studentsList = StudentS.getAllStudentDetails();
+    async componentDidMount() {
+        const _studentsList = await StudentS.getAllStudentDetails();
         console.log(_studentsList)
         // frame the datatable
         _studentsList.map(s => {

@@ -160,14 +160,6 @@ class StudentAdd extends Component {
 
                 </div>
 
-                {/* <TextField
-                        id="emaild-id"
-                        name="email"
-                        label="Email ID"
-                        value={(this.state.formData && this.state.formData.email)}
-                        className={this.classes.textField}
-                        margin="normal"
-                    /> */}
                 <Email
                     data={this.state.formData && this.state.formData.emailID}
                     handleChange={this.emailIDChangeHandler}

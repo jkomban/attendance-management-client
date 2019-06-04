@@ -2,13 +2,32 @@ import React, { Component } from 'react';
 import { SideDrawer } from '../../components/SideDrawer';
 import Header from '../../components/Header';
 import AppRouter from '../../routes/Routes';
+import { ConfigS } from '../../services'
 // import './App.css';
 
 
 class App extends Component {
-  state = {
-    isDrawerOpen: false,
-    title: 'Attendance Management System'
+
+  constructor() {
+    super()
+    this.state = {
+      isDrawerOpen: false,
+      title: 'Attendance Management System',
+      isConfigLoaded: false
+    }
+  }
+
+  loadConfig = async () => {
+    try {
+      await ConfigS.setConfiguration()
+      this.setState({ isConfigLoaded: true, loadFailed: false })
+    } catch (error) {
+      this.setState({ loadFailed: true })
+    }
+  }
+
+  componentDidMount() {
+    this.loadConfig()
   }
 
 
@@ -24,13 +43,27 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <Header title={this.state.title} toggleDrawer={this.toggleDrawer}></Header>
-        <SideDrawer open={this.state.isDrawerOpen} toggleDrawer={this.toggleDrawer}></SideDrawer>
-        <AppRouter headerHandler={this.headerHandler}></AppRouter>
-      </div >
-    )
+    let { isConfigLoaded, loadFailed } = this.state
+
+
+    if (loadFailed) {
+      return (
+        <div>
+          <h1>
+            Failed to Load the Page
+          </h1>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Header title={this.state.title} toggleDrawer={this.toggleDrawer}></Header>
+          <SideDrawer open={this.state.isDrawerOpen} toggleDrawer={this.toggleDrawer}></SideDrawer>
+          <AppRouter headerHandler={this.headerHandler}></AppRouter>
+        </div >
+      )
+    }
+
   }
 }
 
