@@ -7,6 +7,7 @@ import Address from '../../components/Address'
 import Name from '../../components/Name'
 import Gender from '../../components/Gender'
 import Email from '../../components/Email'
+import { StudentS } from '../../services'
 
 const styles = {
     textField: {
@@ -53,8 +54,8 @@ class StudentAdd extends Component {
             emailID: (this.data && this.data.email) || '',
             gender: (this.data && this.data.gender) || 'F',
             address: {
-                addressline1: (this.data && this.data.address.addressline1) || '',
-                addressline2: (this.data && this.data.address.addressline2) || '',
+                addressLine1: (this.data && this.data.address.addressLine1) || '',
+                addressLine2: (this.data && this.data.address.addressLine2) || '',
                 city: (this.data && this.data.address.city) || '',
                 zipCode: (this.data && this.data.address.zipCode) || '',
                 state: (this.data && this.data.address.state) || ''
@@ -110,6 +111,12 @@ class StudentAdd extends Component {
         event.preventDefault()
         console.log(`handleClearClick ${JSON.stringify(this.clearData)}`)
         this.setState({ formData: this.clearData })
+    }
+
+    handleSaveButton = (event) => {
+        event.preventDefault();
+        console.log(`handleSaveButton() - `)
+        StudentS.updateStudentDetails(this.state.formData)
     }
 
     handleDateChange = (dob) => {
@@ -172,7 +179,12 @@ class StudentAdd extends Component {
                     classes={this.classes}
                     className={this.classes.shift} />
 
-                <Button variant="contained" color="primary" className={this.classes.button}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={this.classes.button}
+                    onClick={this.handleSaveButton}
+                >
                     {this.state.formData && "Update"}
                     {!this.state.formData && "Save"}
                 </Button>

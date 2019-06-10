@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Config from './config'
-import tempData from './temp-student'
 
 // const getStudentDetails = (studentID) => {
 //     return {
@@ -39,7 +38,23 @@ const getAllStudentDetails = async (pageSize, index) => {
         console.log(`ERROR: services.student.getAllStudentDetails() : failed ${JSON.stringify(e)}`)
         throw new Error('ERROR in fetching details from students')
     }
+}
+
+const updateStudentDetails = async (Student) => {
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: studentSrv } = Config.config
+    const serviceURL = `${backendBase}/${basePath}/${studentSrv}/${Student.studentId}`
+    console.log(`services.student.updateStudentDetails() - sending request${serviceURL}`)
+    let response = {}
+
+    try {
+        response = await axios.put(serviceURL, Student)
+        console.log(response)
+        return response
+    } catch (e) {
+        console.log(`ERROR: services.student.getAllStudentDetails() : failed ${JSON.stringify(e)}`)
+        throw new Error(`ERROR in updating student [${Student.studentId}]`)
+    }
 
 }
 
-export default { getAllStudentDetails };
+export default { getAllStudentDetails, updateStudentDetails };

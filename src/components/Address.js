@@ -9,19 +9,19 @@ const Address = (props) => {
         <div className={classes.shift}>
             <TextField
                 id="address-line-1-id"
-                name="addressline1"
+                name="addressLine1"
                 label="Address line 1"
                 margin="normal"
-                value={data && data.addressline1}
+                value={data && data.addressLine1}
                 className={classes.textField}
                 onChange={handleChange}
             />
             <TextField
                 id="address-line-2-id"
-                name="addressline2"
+                name="addressLine2"
                 label="Address line 2"
                 margin="normal"
-                value={data && data.addressline2}
+                value={data && data.addressLine2}
                 className={classes.textField}
                 onChange={handleChange}
             />

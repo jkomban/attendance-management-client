@@ -49,7 +49,7 @@ class Student extends Component {
                 2010,
                 s.gender,
                 93.2,
-                s.email
+                s.email || ``
             ])
         })
         console.log(this.data)
