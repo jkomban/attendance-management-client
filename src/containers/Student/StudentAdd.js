@@ -42,7 +42,7 @@ class StudentAdd extends Component {
         super(props)
         console.log(props)
         this.data = props.data
-        this.heading = (this.data && this.data.studentId) ? 'Update Student' : 'Add Student'
+        this.heading = (this.data && this.data.studentId) ? 'Update' : 'Add'
         this.clearData = {
             studentId: (this.data && this.data.studentId),
             name: {
@@ -142,7 +142,7 @@ class StudentAdd extends Component {
                     <Typography
                         variant="h6"
                         className={this.classes.heading}>
-                        {this.heading}
+                        {this.heading + ' Student'}
                     </Typography>
                 </div>
                 <Name
@@ -185,8 +185,8 @@ class StudentAdd extends Component {
                     className={this.classes.button}
                     onClick={this.handleSaveButton}
                 >
-                    {this.state.formData && "Update"}
-                    {!this.state.formData && "Save"}
+                    {this.state.formData.studentId && "Update"}
+                    {!this.state.formData.studentId && "Add"}
                 </Button>
                 <Button
                     variant="outlined"

@@ -42,12 +42,27 @@ const getAllStudentDetails = async (pageSize, index) => {
 
 const updateStudentDetails = async (Student) => {
     let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: studentSrv } = Config.config
-    const serviceURL = `${backendBase}/${basePath}/${studentSrv}/${Student.studentId}`
+    let serviceURL;
+    let option = "ADD";
+
+    if (Student.studentId) {
+        serviceURL = `${backendBase}/${basePath}/${studentSrv}/${Student.studentId}`
+        option = "UPDATE"
+    } else {
+        serviceURL = `${backendBase}/${basePath}/${studentSrv}/`
+        option = "ADD"
+    }
+
     console.log(`services.student.updateStudentDetails() - sending request${serviceURL}`)
     let response = {}
+    console.log(Student)
 
     try {
-        response = await axios.put(serviceURL, Student)
+        if (option === "ADD")
+            response = await axios.post(serviceURL, Student)
+        else if (option === "UPDATE")
+            response = await axios.put(serviceURL, Student)
+
         console.log(response)
         return response
     } catch (e) {
@@ -56,5 +71,6 @@ const updateStudentDetails = async (Student) => {
     }
 
 }
+
 
 export default { getAllStudentDetails, updateStudentDetails };
