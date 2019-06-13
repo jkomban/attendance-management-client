@@ -49,7 +49,7 @@ class Student extends Component {
                 2010,
                 s.gender,
                 93.2,
-                s.email || ``
+                s.emailID || ``
             ])
         })
         console.log(this.data)
@@ -105,6 +105,21 @@ class Student extends Component {
         console.log(`-------  CELL CLICKED ----- END`)
     }
 
+    onRowsDeleteHandler = async (rowsDeleted) => {
+        console.log(`-------  ROWS DELETED  ----- START`)
+        console.log(rowsDeleted)
+        const promiseList = rowsDeleted.data.forEach(item => {
+            // console.log(dataIndex)
+            console.log(this.state.studentsList[item.dataIndex])
+            return StudentS.deleteStudentDetails(this.state.studentsList[item.dataIndex])
+        });
+
+        console.log(promiseList)
+
+        await Promise.all(promiseList)
+        console.log(`-------  ROWS DELETED  ----- END`)
+    }
+
     onTabChangeHandler = (event, value) => {
         if (value === 1)
             this.setState({ selectedTab: value, selectedUserDetails: null })
@@ -119,7 +134,8 @@ class Student extends Component {
 
         onRowClick: this.onRowClickHandler,
         onCellClick: this.onCellClickHandler,
-        onRowsSelect: this.onRowsSelectHandler
+        onRowsSelect: this.onRowsSelectHandler,
+        onRowsDelete: this.onRowsDeleteHandler
     }
 
     dropdownHandler = (event) => {

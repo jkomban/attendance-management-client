@@ -51,7 +51,7 @@ class StudentAdd extends Component {
                 lastName: (this.data && this.data.name.lastName) || ''
             },
             dob: (this.data && this.data.dob) || undefined,
-            emailID: (this.data && this.data.email) || '',
+            emailID: (this.data && this.data.emailID) || '',
             gender: (this.data && this.data.gender) || 'F',
             address: {
                 addressLine1: (this.data && this.data.address.addressLine1) || '',

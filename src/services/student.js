@@ -40,6 +40,24 @@ const getAllStudentDetails = async (pageSize, index) => {
     }
 }
 
+const deleteStudentDetails = async (Student) => {
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: studentSrv } = Config.config
+    const serviceURL = `${backendBase}/${basePath}/${studentSrv}/${Student.studentId}`
+
+    console.log(`services.student.deleteStudentDetails() - sending request[${serviceURL}]`)
+    let response = {}
+    console.log(Student)
+
+    try {
+        response = await axios.delete(serviceURL, { data: Student })
+        console.log(response)
+        return response
+    } catch (e) {
+        console.log(`ERROR: services.student.deleteStudentDetails() : failed ${JSON.stringify(e)}`)
+        // throw new Error(`ERROR in deleting student [${Student.studentId}]`)
+    }
+}
+
 const updateStudentDetails = async (Student) => {
     let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: studentSrv } = Config.config
     let serviceURL;
@@ -73,4 +91,4 @@ const updateStudentDetails = async (Student) => {
 }
 
 
-export default { getAllStudentDetails, updateStudentDetails };
+export default { getAllStudentDetails, updateStudentDetails, deleteStudentDetails };
