@@ -108,10 +108,11 @@ class Student extends Component {
     onRowsDeleteHandler = async (rowsDeleted) => {
         console.log(`-------  ROWS DELETED  ----- START`)
         console.log(rowsDeleted)
-        const promiseList = rowsDeleted.data.forEach(item => {
+        let promiseList = [];
+        rowsDeleted.data.forEach(item => {
             // console.log(dataIndex)
             console.log(this.state.studentsList[item.dataIndex])
-            return StudentS.deleteStudentDetails(this.state.studentsList[item.dataIndex])
+            promiseList.push(StudentS.deleteStudentDetails(this.state.studentsList[item.dataIndex]))
         });
 
         console.log(promiseList)
@@ -121,10 +122,15 @@ class Student extends Component {
     }
 
     onTabChangeHandler = (event, value) => {
-        if (value === 1)
+        if (value === 1) {
+            console.log(`TAB 1 selected`)
             this.setState({ selectedTab: value, selectedUserDetails: null })
-        else
+        }
+        else {
+            StudentS.getAllStudentDetails();
             this.setState({ selectedTab: value })
+        }
+
     }
 
 
