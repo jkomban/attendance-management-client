@@ -7,7 +7,7 @@ import Address from '../../components/Address'
 import Name from '../../components/Name'
 import Gender from '../../components/Gender'
 import Email from '../../components/Email'
-import { StudentS } from '../../services'
+import { updateStudentDetails } from '../../services'
 
 const styles = {
     textField: {
@@ -116,7 +116,7 @@ class StudentAdd extends Component {
     handleSaveButton = (event) => {
         event.preventDefault();
         console.log(`handleSaveButton() - `)
-        StudentS.updateStudentDetails(this.state.formData)
+        updateStudentDetails(this.state.formData)
     }
 
     handleDateChange = (dob) => {

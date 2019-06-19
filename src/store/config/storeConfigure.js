@@ -8,11 +8,18 @@ export function configureStore(initialState) {
     const store = createStore(
         reducers,
         initialState,
+        // applyMiddleware(immutableStateInvariant(), reduxThunk)
         composeEnhancers(applyMiddleware(immutableStateInvariant(), reduxThunk))
     );
 
     return store;
 };
 
-const store = configureStore();
+const initialState = {
+    auth: {},
+    students: [],
+    student: {}
+}
+
+const store = configureStore(initialState);
 export default store;

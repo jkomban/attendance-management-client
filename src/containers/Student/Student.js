@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core';
-import { StudentS } from '../../services'
+import { getAllStudents } from '../../store/actions/student-actions'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
 import StudentDetails from './StudentDetails';
 import StudentAdd from './StudentAdd';
 import { Tabs, Tab } from '@material-ui/core';
@@ -26,23 +28,20 @@ class Student extends Component {
         this.currentRowSelected = []
         this.allRowsSelected = []
         this.state = {
-            selectedClassId: 1,
-            selectedBatchId: 2010,
             selectedTab: 0,
             selectedUserDetails: null,
             studentsList: [],
             tableData: []
         }
         this.tableColumns = ["id", "Name", "Class", "Batch", "Gender", "Agg.Mark", "emailID"]
+        this.tableData = []
         this.data = []
     }
 
-    async componentDidMount() {
-        const _studentsList = await StudentS.getAllStudentDetails();
-        console.log(_studentsList)
-        // frame the datatable
-        _studentsList.map(s => {
-            this.data.push([
+    async updateTable(_studentsList) {
+        this.data.length = 0;
+        this.props.students && this.props.students.map(s => {
+            return this.data.push([
                 s.studentId,
                 s.name.firstName + s.name.lastName,
                 s.name.middleName,
@@ -52,32 +51,23 @@ class Student extends Component {
                 s.emailID || ``
             ])
         })
-        console.log(this.data)
-        this.setState({ studentsList: _studentsList, tableData: this.data })
+        this.tableData = this.data
+        // console.log(this.data)
+        // this.setState({ studentsList: _studentsList, tableData: this.data })
 
+    }
+
+    async componentDidMount() {
+        console.log(`HERE!!!!! componentDidMount`)
+        console.log(this.props)
+        const _studentsList = await this.props.getAllStudents({ pageSize: 10, index: 0 });
+        console.log(this.props)
+        // frame the datatable
+        await this.updateTable(_studentsList)
 
     }
 
     onRowClickHandler = (rowData, rowMeta) => {
-        // console.log(`-------  ROW CLICKED ----- START`)
-        // console.log(this)
-        // console.log(rowData)
-        // console.log(rowMeta)
-        // if (this.allRowsSelected && this.allRowsSelected.length !== 0) {
-        //     console.log(`There are selected rows`);
-        // } else {
-        //     console.log(`No rows selected`)
-        //     const selectedRow = this.state.tableData[rowMeta.dataIndex]
-        //     console.log(`Selected ID:${selectedRow[0]}`)
-        //     const selectedUser = this.state.studentsList.find(student => {
-        //         if (student.studentId === selectedRow[0])
-        //             return student
-        //     })
-        //     console.log(selectedUser)
-        //     // this.setState({ selectedTab: 1, selectedUserDetails: selectedUser })
-        //     console.log(`Cell Clicked - retreiving information for ${selectedUser.studentId}-${selectedUser.name.firstName}`)
-        // }
-        // console.log(`-------  ROW CLICKED ----- END`)
     }
 
     onRowsSelectHandler = function (currentRowSelected, allRowsSelected) {
@@ -92,8 +82,8 @@ class Student extends Component {
         console.log(colData)
         console.log(cellMeta)
 
-        const selectedRow = this.state.tableData[cellMeta.rowIndex]
-        const selectedUser = this.state.studentsList.find(student => {
+        const selectedRow = this.tableData[cellMeta.rowIndex]
+        const selectedUser = this.props.students.find(student => {
             if (student.studentId === selectedRow[0])
                 return student
         })
@@ -112,7 +102,7 @@ class Student extends Component {
         rowsDeleted.data.forEach(item => {
             // console.log(dataIndex)
             console.log(this.state.studentsList[item.dataIndex])
-            promiseList.push(StudentS.deleteStudentDetails(this.state.studentsList[item.dataIndex]))
+            // promiseList.push(deleteStudentDetails(this.state.studentsList[item.dataIndex]))
         });
 
         console.log(promiseList)
@@ -121,13 +111,14 @@ class Student extends Component {
         console.log(`-------  ROWS DELETED  ----- END`)
     }
 
-    onTabChangeHandler = (event, value) => {
+    onTabChangeHandler = async (event, value) => {
         if (value === 1) {
             console.log(`TAB 1 selected`)
             this.setState({ selectedTab: value, selectedUserDetails: null })
         }
         else {
-            StudentS.getAllStudentDetails();
+            const _studentsList = await this.props.getAllStudents({ pageSize: 10, index: 0 });
+            this.updateTable(_studentsList)
             this.setState({ selectedTab: value })
         }
 
@@ -165,7 +156,7 @@ class Student extends Component {
                 </Tabs>
                 {this.state.selectedTab === 0 && <StudentDetails
                     columns={this.tableColumns}
-                    data={this.state.tableData}
+                    data={this.tableData}
                     options={this.tableOptions}
                 />}
                 {this.state.selectedTab === 1 && <StudentAdd data={this.state.selectedUserDetails} />}
@@ -177,4 +168,17 @@ class Student extends Component {
 
 }
 
-export default withStyles(styles)(Student);
+const mapStateToProps = (state) => {
+    console.log(`Student.mapStateToProps() - ${JSON.stringify(state)}`)
+    return {
+        students: state.students
+    }
+}
+
+const mapDispatachToProps = (dispatch) => {
+    return bindActionCreators({
+        getAllStudents
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatachToProps)(withStyles(styles)(Student));
