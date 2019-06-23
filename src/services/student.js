@@ -15,13 +15,15 @@ const getAllStudentDetails = async ({ pageSize = 10, index = 0 }) => {
         // return tempData.students
     } catch (e) {
         console.error(`ERROR: services.student.getAllStudentDetails() : failed ${JSON.stringify(e)}`)
-        throw new Error('ERROR in fetching details from students')
+        // throw new Error('ERROR in fetching details from students')
     }
 }
 
 const deleteStudentDetails = async (Student) => {
+    console.log(Student)
     let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: studentSrv } = Config.config
     const serviceURL = `${backendBase}/${basePath}/${studentSrv}/${Student.studentId}`
+    const getURL = `${backendBase}/${basePath}/${studentSrv}`
 
     console.log(`services.student.deleteStudentDetails() - sending request[${serviceURL}]`)
     let response = {}
@@ -30,9 +32,13 @@ const deleteStudentDetails = async (Student) => {
     try {
         response = await axios.delete(serviceURL, { data: Student })
         console.log(response)
-        return response
+        response = await axios.get(getURL)
+        return response.data
     } catch (e) {
         console.log(`ERROR: services.student.deleteStudentDetails() : failed ${JSON.stringify(e)}`)
+        console.log(e.response.data)
+        console.log(e.response.status)
+        return new Error('Could not process the request')
         // throw new Error(`ERROR in deleting student [${Student.studentId}]`)
     }
 }

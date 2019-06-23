@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core';
-import { getAllStudents } from '../../store/actions/student-actions'
+import { getAllStudents, deleteStudentById } from '../../store/actions/student-actions'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import StudentDetails from './StudentDetails';
 import StudentAdd from './StudentAdd';
 import { Tabs, Tab } from '@material-ui/core';
 import { List, PersonAdd } from '@material-ui/icons';
-
-// import StudentSearch from './student-search'
 
 const styles = theme => ({
     root: {
@@ -37,8 +35,9 @@ class Student extends Component {
         this.tableData = []
         this.data = []
     }
+    static callCount = 0;
 
-    async updateTable(_studentsList) {
+    async updateTable() {
         this.data.length = 0;
         this.props.students && this.props.students.map(s => {
             return this.data.push([
@@ -60,11 +59,16 @@ class Student extends Component {
     async componentDidMount() {
         console.log(`HERE!!!!! componentDidMount`)
         console.log(this.props)
+        console.log(this.state)
         const _studentsList = await this.props.getAllStudents({ pageSize: 10, index: 0 });
-        console.log(this.props)
         // frame the datatable
         await this.updateTable(_studentsList)
+        // this.setState({ selectedTab: 0 })
 
+    }
+
+    async componentWillUnmount() {
+        console.log(`I am inside componentWillUnMount`)
     }
 
     onRowClickHandler = (rowData, rowMeta) => {
@@ -98,12 +102,14 @@ class Student extends Component {
     onRowsDeleteHandler = async (rowsDeleted) => {
         console.log(`-------  ROWS DELETED  ----- START`)
         console.log(rowsDeleted)
+        console.log(this.props.students)
         let promiseList = [];
-        rowsDeleted.data.forEach(item => {
-            // console.log(dataIndex)
-            console.log(this.state.studentsList[item.dataIndex])
-            // promiseList.push(deleteStudentDetails(this.state.studentsList[item.dataIndex]))
-        });
+
+        for (let i = 0; i < rowsDeleted.data.length; i++) {
+            const item = rowsDeleted.data[i];
+            const studentToDelete =  this.props.students[item.dataIndex]
+            promiseList.push(this.props.deleteStudentById(studentToDelete))
+        }
 
         console.log(promiseList)
 
@@ -147,7 +153,11 @@ class Student extends Component {
     }
 
     render() {
-        console.log(`Student.js-> render completed`)
+        this.updateTable()
+        Student.callCount++;
+        console.log(`Student.js-> render completed ${Student.callCount} ${JSON.stringify(this.state)}`)
+        console.log(this.tableData)
+
         return (
             <div className={this.classes.root}>
                 <Tabs value={this.state.selectedTab} onChange={this.onTabChangeHandler} scrollable scrollButtons="off">
@@ -177,7 +187,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
-        getAllStudents
+        getAllStudents,
+        deleteStudentById
     }, dispatch)
 }
 

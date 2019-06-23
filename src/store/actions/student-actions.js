@@ -12,7 +12,7 @@ const getAllStudents = ({ pageSize, index }) => {
 
     return async (dispatch, getState) => {
         let state = getState()
-        console.log(`student-actions() - currentState [JSON.stringify(${state})]`)
+        console.log(`student-actions() - currentState [${JSON.stringify(state)}]`)
 
         try {
             const data = await getAllStudentDetails({ pageSize, index })
@@ -21,16 +21,35 @@ const getAllStudents = ({ pageSize, index }) => {
             dispatch({ type: STUDENT_ACTIONS.RETRIEVE_STUDENTS, students: data })
 
         } catch (err) {
-            dispatch({ type: STUDENT_ACTIONS.RETRIEVE_STUDENTS, data: [] })
-            console.error(`student-actions() - success [JSON.stringify(${err})]`)
+            dispatch({ type: STUDENT_ACTIONS.RETRIEVE_STUDENTS, stuents: [] })
+            console.error(`student-actions() - FAILURE [JSON.stringify(${err})]`)
         }
 
     };
 }
 
+const deleteStudentById = (Student) => {
+    return async (dispatch, getState) => {
+        const state = getState()
+        console.log(`currentState [${JSON.stringify(state)}]`)
+
+        try {
+            const data = await deleteStudentDetails(Student);
+            console.log(`SUCCESS: [${JSON.stringify(data)}]`)
+            dispatch({ type: STUDENT_ACTIONS.DELETE_STUDENTS, students: data })
+
+        } catch (err) {
+            dispatch({ type: STUDENT_ACTIONS.DELETE_STUDENTS, students: [] })
+            console.error(`FAILURE: [${JSON.stringify(err)}]`)
+            console.log(err)
+        }
+    }
+}
+
 
 export {
     STUDENT_ACTIONS,
-    getAllStudents
+    getAllStudents,
+    deleteStudentById
 }
 

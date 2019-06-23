@@ -11,15 +11,17 @@ const styles = theme => ({
 });
 
 
-const StudentDetails = ({ title, columns, data, options , classes}) => {
-	console.log(data);
+const StudentDetails = ({ title, columns, data, options, classes }) => {
+    console.log(data);
     return (
-        <MUIDatatable
-            title={'Students List'}
-            columns={columns}
-            data={data}
-            options={options}
-        />
+        <div>
+            {data && data.length > 0 && <MUIDatatable
+                title={'Students List'}
+                columns={columns}
+                data={data}
+                options={options}
+            />}
+        </div>
     )
 }
 
