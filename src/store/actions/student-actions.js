@@ -21,8 +21,8 @@ const getAllStudents = ({ pageSize, index }) => {
             dispatch({ type: STUDENT_ACTIONS.RETRIEVE_STUDENTS, students: data })
 
         } catch (err) {
-            dispatch({ type: STUDENT_ACTIONS.RETRIEVE_STUDENTS, stuents: [] })
             console.error(`student-actions() - FAILURE [JSON.stringify(${err})]`)
+            dispatch({ type: STUDENT_ACTIONS.RETRIEVE_STUDENTS, stuents: [] })
         }
 
     };

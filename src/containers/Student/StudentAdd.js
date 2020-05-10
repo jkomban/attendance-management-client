@@ -3,10 +3,10 @@ import { withStyles } from '@material-ui/core';
 import { Paper, TextField, Button, Typography } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, InlineDatePicker } from 'material-ui-pickers'
-import Address from '../../components/Address'
-import Name from '../../components/Name'
-import Gender from '../../components/Gender'
-import Email from '../../components/Email'
+import Address from '../../common/components/Address'
+import Name from '../../common/components/Name'
+import Gender from '../../common/components/Gender'
+import Email from '../../common/components/Email'
 import { updateStudentDetails } from '../../services'
 
 const styles = {

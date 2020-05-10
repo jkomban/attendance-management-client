@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { SideDrawer } from '../../components/SideDrawer';
-import Header from '../../components/Header';
+import { SideDrawer } from '../../common/components/SideDrawer';
+import Header from '../../common/components/Header';
 import AppRouter from '../../routes/Routes';
 import { ConfigS } from '../../services'
 // import './App.css';
