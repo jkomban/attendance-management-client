@@ -1,19 +1,21 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import MUIDatatable from 'mui-datatables';
 
 const styles = theme => ({
     root: {
-        width: '100%',
-        margin: theme.spacing.unit * 3,
+        margin: theme.spacing(3),
         overflowX: 'auto',
     }
 });
 
-const StudentDetails = ({ title, columns, data, options, classes }) => {
+const useStyles = makeStyles(styles);
+
+const StudentDetails = ({ title, columns, data, options }) => {
+    const classes = useStyles();
     console.log(data);
     return (
-        <div>
+        <div className={classes.root}>
             <MUIDatatable
                 title={'Students List'}
                 columns={columns}
@@ -24,4 +26,4 @@ const StudentDetails = ({ title, columns, data, options, classes }) => {
     )
 }
 
-export default withStyles(styles)(StudentDetails);
+export default StudentDetails;

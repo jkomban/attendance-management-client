@@ -67,10 +67,6 @@ class Student extends Component {
 
     }
 
-    async componentWillUnmount() {
-        console.log(`I am inside componentWillUnMount`)
-    }
-
     onRowClickHandler = (rowData, rowMeta) => {
     }
 

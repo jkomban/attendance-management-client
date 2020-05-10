@@ -1,18 +1,25 @@
 import React, { useEffect } from 'react';
-import { withStyles, Button } from '@material-ui/core';
+import { makeStyles, Button } from '@material-ui/core';
 import { PersonAdd } from '@material-ui/icons';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { getAllStudents, deleteStudentById } from '../../store/actions/student-actions'
 import StudetDetails from './details';
 
-const styles = () => ({
+const styles = theme => ({
+    root: {
+        width: '100%'
+    },
     button: {
         marginTop: '15px',
     }
 })
 
-const Student = ({ students, getAllStudents, classes, ...restProps }) => {
+const useStyles = makeStyles(styles)
+
+const Student = ({ students, getAllStudents, ...restProps }) => {
+    const classes = useStyles();
+
     const tableColumns = ["id", "Name", "Class", "Batch", "Gender", "Agg.Mark", "emailID"]
     let tableData = [];
 
@@ -33,23 +40,20 @@ const Student = ({ students, getAllStudents, classes, ...restProps }) => {
     useEffect(() => {
         // get data
         console.log(`................... DATA LOADING`)
-        console.log(classes)
-        // getAllStudents({ pageSize: 10, index: 0 })
-        console.log(students)
+        getAllStudents({ pageSize: 10, index: 0 })
 
-    }, [students])
+    }, [])
 
     return (
-        <div>
-            <div>
-                <Button />
-                <Button
+        <div className={classes.root}>
+
+            {/* <Button
                     variant="contained"
                     color="primary"
                     className={classes.button}
                     startIcon={<PersonAdd />}
-                >Add</Button>
-            </div>
+                >Add</Button> */}
+
             <StudetDetails columns={tableColumns} data={tableData} options={tableOptions}></StudetDetails>
         </div>
     )
@@ -69,4 +73,4 @@ const mapDispatachToProps = (dispatch) => {
     }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatachToProps)(withStyles(styles)(Student));
+export default connect(mapStateToProps, mapDispatachToProps)(Student);

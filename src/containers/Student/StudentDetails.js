@@ -5,7 +5,7 @@ import MUIDatatable from 'mui-datatables';
 const styles = theme => ({
     root: {
         width: '100%',
-        margin: theme.spacing.unit * 3,
+        margin: theme.spacing(3),
         overflowX: 'auto',
     }
 });

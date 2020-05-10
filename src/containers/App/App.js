@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import { SideDrawer } from '../../common/components/SideDrawer';
+import { ConfigS } from '../../services'
+import MainLayout from '../../layouts/Main';
+import SideDrawer from '../../common/components/SideDrawer';
 import Header from '../../common/components/Header';
 import AppRouter from '../../routes/Routes';
-import { ConfigS } from '../../services'
-// import './App.css';
-
 
 class App extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      isDrawerOpen: false,
-      title: 'Attendance Management System',
       isConfigLoaded: false
     }
   }
@@ -30,23 +27,11 @@ class App extends Component {
     this.loadConfig()
   }
 
-
-  toggleDrawer = (isCurrentlyOpen, newTitle) => {
-    console.log(`App.js->toggleDrawer()-> ${this.state.isDrawerOpen} ${isCurrentlyOpen}`)
-    this.setState({ isDrawerOpen: isCurrentlyOpen, title: newTitle });
-    // state.isDrawerOpen = isCurrentlyOpen;
-    console.log(`App.js->toggleDrawer() after-> ${this.state.isDrawerOpen} ${isCurrentlyOpen}`)
-  }
-
-  headerHandler = (newTitle) => {
-    console.log(newTitle)
-  }
-
   render() {
     let { isConfigLoaded, loadFailed } = this.state
 
 
-    if (loadFailed) {
+    if (loadFailed || !isConfigLoaded) {
       return (
         <div>
           <h1>
@@ -56,11 +41,7 @@ class App extends Component {
       )
     } else {
       return (
-        <div>
-          <Header title={this.state.title} toggleDrawer={this.toggleDrawer}></Header>
-          <SideDrawer open={this.state.isDrawerOpen} toggleDrawer={this.toggleDrawer}></SideDrawer>
-          <AppRouter headerHandler={this.headerHandler}></AppRouter>
-        </div >
+        <MainLayout />
       )
     }
 

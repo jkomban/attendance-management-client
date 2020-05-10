@@ -1,35 +1,22 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import { withStyles } from '@material-ui/core/styles'
+import MenuOpen from '@material-ui/icons/MenuOpen'
 
-const styles = {
-    root: {
-        flexGrow: 1,
-    },
-    flex: {
-        flex: 1
-    },
-    menuButton: {
-        marginLeft: -12
-    },
-};
 
-const Header = (props) => {
-    console.log(`Header-> ${props.title}`)
+const Header = ({ title, toggleNavbar, open }) => {
     return (
-        <AppBar position="static">
+        <AppBar position="fixed" >
             <Toolbar>
-                <IconButton className={props.classes.menuButton} color="inherit" aria-label="Menu">
-                    <MenuIcon onClick={() => { props.toggleDrawer(true) }} />
+                <IconButton color="inherit" aria-label="Menu" onClick={toggleNavbar}>
+                    {open ? <MenuOpen /> : <MenuIcon />}
                 </IconButton>
-                <Typography variant="h6" color="inherit" className={props.classes.flex}>
-                    {props.title}
+                <Typography variant="h6" color="inherit" >
+                    {title}
                 </Typography>
             </Toolbar>
         </AppBar>
     );
-
 };
 
-export default withStyles(styles)(Header);
+export default Header;
