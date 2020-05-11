@@ -28,7 +28,7 @@ const MainLayout = props => {
                 <div id="emptyidv" className={classes.offset} >Hello</div>
                 <div id="content-container" className={classes.contentContainer}>
                     {open && <SideDrawer />}
-                    <AppRouter style={{ backgroundColor: 'red' }}></AppRouter>
+                    <AppRouter></AppRouter>
                 </div>
 
             </div>
