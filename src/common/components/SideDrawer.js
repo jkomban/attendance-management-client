@@ -1,12 +1,25 @@
 import { Divider, List, Paper } from '@material-ui/core'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import React from 'react'
 import MenuItem from './MenuItem'
 import { Dashboard, Assignment, Person, School, Grain, ExitToApp } from '@material-ui/icons'
 
+const style = theme => ({
+    root: {
+        height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`
+    }
+})
+
+const useStyle = makeStyles(style)
+
 const SideDrawer = () => {
+    const classes = useStyle()
     console.log(`Inside sidedrawer`)
+    console.log(classes)
+
+
     return (
-        <Paper elevation={3}>
+        <Paper elevation={3} className={classes.root}>
             <List >
                 <MenuItem
                     listIcon={<Dashboard />}

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Header from '../common/components/Header';
 import SideDrawer from '../common/components/SideDrawer';
+
 import AppRouter from '../routes/Routes'
+
 import styles from './main.jss'
 
 const useStyles = makeStyles(styles);
