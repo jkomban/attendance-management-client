@@ -22,7 +22,10 @@ const getAllStudents = ({ pageSize, index }) => {
 
         } catch (err) {
             console.error(`student-actions() - FAILURE [JSON.stringify(${err})]`)
-            dispatch({ type: STUDENT_ACTIONS.RETRIEVE_STUDENTS, stuents: [] })
+            // dispatch({ type: STUDENT_ACTIONS.RETRIEVE_STUDENTS, stuents: [] })
+            /** TODO
+             * 1. Handle error in generic way
+             * */
         }
 
     };
@@ -39,9 +42,13 @@ const deleteStudentById = (Student) => {
             dispatch({ type: STUDENT_ACTIONS.DELETE_STUDENTS, students: data })
 
         } catch (err) {
-            dispatch({ type: STUDENT_ACTIONS.DELETE_STUDENTS, students: [] })
             console.error(`FAILURE: [${JSON.stringify(err)}]`)
             console.log(err)
+            // dispatch({ type: STUDENT_ACTIONS.DELETE_STUDENTS, students: [] })
+            /** TODO
+             * 1. Handle error in generic way
+             * */
+
         }
     }
 }

@@ -11,7 +11,7 @@ const Header = ({ title, toggleNavbar, open }) => {
                 <IconButton color="inherit" aria-label="Menu" onClick={toggleNavbar}>
                     {open ? <MenuOpen /> : <MenuIcon />}
                 </IconButton>
-                <Typography variant="h6" color="inherit" >
+                <Typography variant="h5" color="inherit" >
                     {title}
                 </Typography>
             </Toolbar>
