@@ -2,7 +2,7 @@ import { Divider, List, Paper } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import React from 'react'
 import MenuItem from './MenuItem'
-import { Dashboard, Assignment, Person, School, Grain, ExitToApp, SupervisedUserCircle, BarChart } from '@material-ui/icons'
+import { Dashboard, Assignment, Person, School, Grain, ExitToApp, SupervisedUserCircle, BarChart, AccountBalance, Business } from '@material-ui/icons'
 import AddCircle from '@material-ui/icons/AddCircle'
 import ViewList from '@material-ui/icons/ViewList'
 
@@ -10,7 +10,8 @@ const style = theme => ({
     root: {
         height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
         width: '100%',
-        maxWidth: 250
+        maxWidth: 250,
+        background: theme.palette.primary.light
     }
 })
 
@@ -62,9 +63,22 @@ const SideDrawer = () => {
             routePath: '/parents/report'
         }];
 
+    const AdministrationSubMenu = [
+        {
+            listIcon: < AccountBalance />,
+            text: "School",
+            routePath: "/schools"
+        },
+        {
+            listIcon: < Business />,
+            text: "Facilities",
+            routePath: "/facilities"
+        }
+    ]
+
 
     return (
-        <Paper elevation={3} className={classes.root}>
+        <Paper elevation={3} className={classes.root} >
             <List >
                 <MenuItem
                     listIcon={<Dashboard />}
@@ -119,6 +133,7 @@ const SideDrawer = () => {
                     listIcon={<Grain />}
                     listText='Administration'
                     routePath={'/administration'}
+                    subMenus={AdministrationSubMenu}
                     appTitle='Administration'
                 >
                 </MenuItem>

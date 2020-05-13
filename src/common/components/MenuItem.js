@@ -41,7 +41,7 @@ const MenuItem = ({ routePath, listIcon, listText, subMenus }) => {
                                 <Link key={index} to={subMenu.routePath} style={{ textDecoration: 'none' }}>
                                     <ListItem button >
                                         <ListItemIcon>{subMenu.listIcon}</ListItemIcon>
-                                        <ListItemText>{subMenu.text}</ListItemText>
+                                        <ListItemText style={{ color: "black" }}>{subMenu.text}</ListItemText>
                                     </ListItem>
                                 </Link>
                             )
@@ -58,7 +58,7 @@ const MenuItem = ({ routePath, listIcon, listText, subMenus }) => {
         <Link to={routePath} style={{ textDecoration: 'none' }}>
             <ListItem button >
                 <ListItemIcon>{listIcon}</ListItemIcon>
-                <ListItemText>{listText}</ListItemText>
+                <ListItemText style={{ color: "black" }}>{listText}</ListItemText>
             </ListItem>
         </Link>)
 
