@@ -28,7 +28,6 @@ const Student = ({ students, getAllStudents, ...restProps }) => {
     const tableOptions = {
         filter: true,
         filterType: 'dropdown',
-
         onRowClick: dummyHandler,
         onCellClick: dummyHandler,
         onRowsSelect: dummyHandler,

@@ -67,7 +67,7 @@ const SideDrawer = () => {
         {
             listIcon: < AccountBalance />,
             text: "School",
-            routePath: "/schools"
+            routePath: "/school"
         },
         {
             listIcon: < Business />,
