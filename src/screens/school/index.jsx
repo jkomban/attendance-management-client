@@ -1,7 +1,10 @@
 import React from 'react'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
-import PageHeader from '../../common/components/PageHeader';
 import MUIDatatable from 'mui-datatables';
+import PageHeader from '../../common/components/PageHeader';
+import { getSchoolDetail } from '../../store/actions/school-actions'
 
 const styles = theme => ({
     root: {
@@ -19,10 +22,11 @@ const styles = theme => ({
 })
 const useStyles = makeStyles(styles)
 
-const School = () => {
+const School = ({ _getSchoolDetails }) => {
     const classes = useStyles()
     console.log(`School details here..`)
     console.log(classes.schoolDetails)
+    _getSchoolDetails()
 
     const columns = ["id", "Name", "Address", "Phone #", "Primary Email", "Fax"]
     let data = [];
@@ -59,4 +63,18 @@ const School = () => {
     )
 }
 
-export default School;
+const mapStateToProps = (state) => {
+    console.log(`School.mapStateToProps() - ${JSON.stringify(state)}`)
+    return {
+        students: state.school
+    }
+}
+
+const mapDispatachToProps = (dispatch) => {
+    return bindActionCreators({
+        _getSchoolDetails: getSchoolDetail
+    }, dispatch)
+}
+
+// export default School;
+export default connect(mapStateToProps, mapDispatachToProps)(School);

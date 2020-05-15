@@ -8,12 +8,14 @@ import devConfig from '../config/dev-config.json'
 let config = {
     "REACT_APP_BACKEND": 'http://localhost:8080',
     "REACT_APP_NAME_BASE": process.env.REACT_APP_NAME_BASE,
-    "REACT_APP_STUDENT_SRVC": process.env.REACT_APP_STUDENT_SRVC
+    "REACT_APP_STUDENT_SRVC": process.env.REACT_APP_STUDENT_SRVC,
+    "REACT_APP_SCHOOL_SRVC": process.env.REACT_APP_SCHOOL_SRVC
 }
 
 function isLocalHost(hostname) {
     // return hostname.indexOf("localhost") > -1 
     console.log(`isLocalHost() - returns ${process.env.NODE_ENV}`)
+    console.log(config)
     return (process.env.NODE_ENV === 'development')
 }
 

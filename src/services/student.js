@@ -3,8 +3,8 @@ import Config from './config'
 
 const getAllStudentDetails = async ({ pageSize = 10, index = 0 }) => {
 
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: studentSrv } = Config.config
-    const serviceURL = `${backendBase}/${basePath}/${studentSrv}`
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: serviceName } = Config.config
+    const serviceURL = `${backendBase}/${basePath}/${serviceName}`
     console.log(`getAllStudentDetails() - ${serviceURL}`)
     console.log(Config.config)
     let response = {}
@@ -15,15 +15,16 @@ const getAllStudentDetails = async ({ pageSize = 10, index = 0 }) => {
         // return tempData.students
     } catch (e) {
         console.error(`ERROR: services.student.getAllStudentDetails() : failed ${JSON.stringify(e)}`)
+        console.log(e);
         // throw new Error('ERROR in fetching details from students')
     }
 }
 
 const deleteStudentDetails = async (Student) => {
     console.log(Student)
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: studentSrv } = Config.config
-    const serviceURL = `${backendBase}/${basePath}/${studentSrv}/${Student.studentId}`
-    const getURL = `${backendBase}/${basePath}/${studentSrv}`
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: serviceName } = Config.config
+    const serviceURL = `${backendBase}/${basePath}/${serviceName}/${Student.studentId}`
+    const getURL = `${backendBase}/${basePath}/${serviceName}`
 
     console.log(`services.student.deleteStudentDetails() - sending request[${serviceURL}]`)
     let response = {}
@@ -44,15 +45,15 @@ const deleteStudentDetails = async (Student) => {
 }
 
 const updateStudentDetails = async (Student) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: studentSrv } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: serviceName } = Config.config
     let serviceURL;
     let option = "ADD";
 
     if (Student.studentId) {
-        serviceURL = `${backendBase}/${basePath}/${studentSrv}/${Student.studentId}`
+        serviceURL = `${backendBase}/${basePath}/${serviceName}/${Student.studentId}`
         option = "UPDATE"
     } else {
-        serviceURL = `${backendBase}/${basePath}/${studentSrv}/`
+        serviceURL = `${backendBase}/${basePath}/${serviceName}/`
         option = "ADD"
     }
 
