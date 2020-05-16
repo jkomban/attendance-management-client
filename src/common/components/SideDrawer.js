@@ -19,9 +19,7 @@ const useStyle = makeStyles(style)
 
 const SideDrawer = () => {
     const classes = useStyle()
-    console.log(`Inside sidedrawer`)
-    console.log(classes)
-
+    // console.log(`Inside sidedrawer`)
     const ClassSubMenu = [
         {
             listIcon: <ViewList />,

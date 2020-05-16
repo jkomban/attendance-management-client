@@ -6,7 +6,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import { makeStyles } from '@material-ui/core/styles'
 
 const style = theme => {
-    console.log(theme)
+    // console.log(theme)
     return {
         extraPadding: {
             paddingLeft: theme.spacing(1)
@@ -52,7 +52,7 @@ const MenuItem = ({ routePath, listIcon, listText, subMenus }) => {
         </div>
     )
 
-    console.log(withSubMenu)
+    // console.log(withSubMenu)
 
     const noSubMenu = (
         <Link to={routePath} style={{ textDecoration: 'none' }}>
