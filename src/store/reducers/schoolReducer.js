@@ -1,6 +1,8 @@
 import { SCHOOL_ACTIONS } from '../actions/school-actions'
 
-const initialSchoolState = {}
+const initialSchoolState = {
+    address: { state: {}, contact: {} }
+}
 
 export default (state = initialSchoolState, action) => {
     // console.log(`SchoolReducer() - state[${JSON.stringify(state)}] action[${JSON.stringify(action)}]`)
