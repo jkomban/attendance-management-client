@@ -7,12 +7,12 @@ const SCHOOL_ACTIONS = {
 }
 
 const getSchoolDetail = () => {
-    console.log("-------------")
     return async (dispatch) => {
         try {
             const data = await getSchoolDetails()
-            console.log("RESULT OBTAINED : ")
-            dispatch({ type: SCHOOL_ACTIONS.RETRIEVE_SCHOOLS, schools: data })
+            // console.log("RESULT OBTAINED : ")
+            // console.log(data)
+            dispatch({ type: SCHOOL_ACTIONS.RETRIEVE_SCHOOLS, data: data })
         } catch (e) {
             console.error(e);
             console.error("school-actions.getSchoolDetails():: ERROR");

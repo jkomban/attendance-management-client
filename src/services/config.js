@@ -15,7 +15,6 @@ let config = {
 function isLocalHost(hostname) {
     // return hostname.indexOf("localhost") > -1 
     console.log(`isLocalHost() - returns ${process.env.NODE_ENV}`)
-    console.log(config)
     return (process.env.NODE_ENV === 'development')
 }
 

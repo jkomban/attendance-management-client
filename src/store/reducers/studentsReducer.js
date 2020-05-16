@@ -21,7 +21,7 @@ export default (state = initialStudentsState, action) => {
 
 
         default:
-            console.log(`studentReducer() - default`)
+            // console.log(`studentReducer() - default`)
             return state;
     }
 }

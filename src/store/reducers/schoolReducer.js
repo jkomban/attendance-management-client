@@ -4,25 +4,18 @@ const initialSchoolState = {}
 
 export default (state = initialSchoolState, action) => {
     // console.log(`SchoolReducer() - state[${JSON.stringify(state)}] action[${JSON.stringify(action)}]`)
+    // console.log(SCHOOL_ACTIONS)
+    console.log(action.type);
+
     switch (action.type) {
-        case SCHOOL_ACTIONS.RETRIEVE_STUDENTS:
+        case SCHOOL_ACTIONS.RETRIEVE_SCHOOLS:
             console.log(state)
             console.log(action)
-            return state
-
-        case SCHOOL_ACTIONS.ADD_SCHOOLS:
-            console.log(state)
-            console.log(action.students)
-            if (action.students instanceof Error) {
-                return state
-            } else {
-                return action.students
-            }
-
+            return { ...state, ...action.data }
 
         default:
-            console.log(`SchoolReducer() - default`)
-            console.log(state);
             return state;
     }
 }
+
+export { initialSchoolState }

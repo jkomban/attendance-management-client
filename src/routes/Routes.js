@@ -7,7 +7,7 @@ import StudentScreen from '../screens/student';
 import SchoolScreen from '../screens/school';
 
 const Routes = props => {
-    console.log(props)
+    // console.log(props)
     return (
         <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
