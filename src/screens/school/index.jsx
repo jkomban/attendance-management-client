@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import MUIDatatable from 'mui-datatables';
 import PageHeader from '../../common/components/PageHeader';
+import Address from '../../common/components/Address';
 import { getSchoolDetail } from '../../store/actions/school-actions'
+import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
@@ -12,26 +14,32 @@ const styles = theme => ({
     },
     container: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        // backgroundColor: 'blue',
+        margin: '10px 20px'
     },
     schoolDetails: {
         height: '30%',
-        padding: '15px 15px'
+        padding: '0px 25px',
+        textAlign: 'center',
     }
 
 })
 const useStyles = makeStyles(styles)
 
-const School = ({ _getSchoolDetails }) => {
+const School = ({ schoolData, _getSchoolDetails }) => {
     const classes = useStyles()
     console.log(`School details here..`)
-    console.log(classes.schoolDetails)
-    _getSchoolDetails()
+    console.log(schoolData)
 
     const columns = ["id", "Name", "Address", "Phone #", "Primary Email", "Fax"]
     let data = [];
 
     const dummyHandler = () => { }
+
+    useEffect(() => {
+        _getSchoolDetails()
+    }, [])
 
     const options = {
         filter: true,
@@ -47,8 +55,12 @@ const School = ({ _getSchoolDetails }) => {
         <div className={classes.root}>
             <PageHeader title="School" />
             <div className={classes.container}>
-                <div className={classes.schoolDetails}>
-                    Name : Bhavans</div>
+                <div id="school-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div className={classes.schoolDetails}> <Typography variant="h3">{schoolData.name}</Typography></div>
+                    <Address data={schoolData.address}></Address>
+                </div>
+
+
                 <div style={{ margin: '10px 10px' }}>
                     < MUIDatatable
                         title={'Facilities'}
@@ -65,8 +77,10 @@ const School = ({ _getSchoolDetails }) => {
 
 const mapStateToProps = (state) => {
     console.log(`School.mapStateToProps() - ${JSON.stringify(state)}`)
+    console.log(state);
+
     return {
-        students: state.school
+        schoolData: state.school
     }
 }
 

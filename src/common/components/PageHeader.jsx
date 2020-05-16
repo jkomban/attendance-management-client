@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 
 
 const style = theme => {
-    console.log(theme)
+    // console.log(theme)
     return ({
         offset: {
             marginLeft: theme.spacing(2),
