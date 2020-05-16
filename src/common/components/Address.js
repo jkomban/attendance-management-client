@@ -1,45 +1,49 @@
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField'
+import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
+import { Typography } from '@material-ui/core'
 
-const styles = {
-    shift: {
-        paddingRight: '14px',
-        paddingLeft: '14px'
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        padding: '25px 0px',
+        margin: '10px 10px'
+    },
+    containerLabel: {
+        color: theme.palette.action.active,
+        fontWeight: theme.typography.fontWeightBold
     }
-}
+})
+
 const useStyles = makeStyles(styles)
 
 const Address = ({ data }) => {
 
     const classes = useStyles()
 
-    const [address, setAddress] = useState({
-        addressLine1: (data && data.addressLine1) || '',
-        addressLine2: (data && data.addressLine2) || '',
-        city: (data && data.city) || '',
-        zipCode: (data && data.zipCode) || '',
-        state: (data && data.state) || ''
-    })
+    const [address, setAddress] = useState(data)
 
     const handleChange = (event) => {
         event.preventDefault()
         const targetName = event.target.name
         const targetValue = event.target.value
         console.log(`handleChange()-> [${targetName}:${targetValue}] `)
-        const addressState = { ...this.state.formData.address }
-        addressState[targetName] = targetValue;
     }
 
     console.log(`Inside Address ${JSON.stringify(data)}`)
 
     return (
-        <div className={classes.shift}>
+        <Paper className={classes.container} elevation={3}>
+            <Typography className={classes.containerLabel}>Address</Typography>
             <TextField
                 id="address-line-1-id"
                 name="addressLine1"
                 label="Address line 1"
                 margin="normal"
+                variant="filled"
                 value={data && data.addressLine1}
                 className={classes.textField}
                 onChange={handleChange}
@@ -62,7 +66,6 @@ const Address = ({ data }) => {
                 className={classes.textField}
                 onChange={handleChange}
             />
-            <br />
             <TextField
                 id="address-state-id"
                 name="state"
@@ -81,7 +84,7 @@ const Address = ({ data }) => {
                 value={data && data.zipCode}
                 onChange={handleChange}
             />
-        </div>
+        </Paper>
     )
 }
 
