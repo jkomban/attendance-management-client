@@ -8,6 +8,8 @@ import Address from '../../common/components/Address';
 import Contact from '../../common/components/contact';
 import { getSchoolDetail } from '../../store/actions/school-actions'
 import { Typography, Paper } from '@material-ui/core';
+import Actionbar from '../../common/components/Actionbar';
+import { useState } from 'react';
 
 const styles = theme => {
     console.log(theme)
@@ -32,17 +34,30 @@ const styles = theme => {
 const useStyles = makeStyles(styles)
 
 const School = ({ schoolData, _getSchoolDetails }) => {
+    const [address, setAddress] = useState(schoolData.address);
     const classes = useStyles()
+    const [actionMode, setActionMode] = useState(true);
+
     console.log(`School details here..`)
     console.log(schoolData)
 
     const columns = ["id", "Name", "Address", "Phone #", "Primary Email", "Fax"]
     let data = [];
 
+
+
+
     const dummyHandler = () => { }
+
+    const saveAddressChange = (newAddress) => {
+        console.log("New address received")
+        console.log(newAddress)
+        setAddress(newAddress)
+    }
 
     useEffect(() => {
         _getSchoolDetails()
+        console.log(`------- USEEFFECT `)
     }, [])
 
     const options = {
@@ -57,7 +72,9 @@ const School = ({ schoolData, _getSchoolDetails }) => {
 
     return (
         <div className={classes.root}>
-            <PageHeader title="School" />
+            <PageHeader title="School" >
+                <Actionbar mode={actionMode} changeMode={setActionMode} />
+            </PageHeader>
             <div className={classes.container}>
                 <div id="school-info" style={{ display: 'flex', flexDirection: 'column' }}>
                     <div className={classes.schoolDetails}> <Typography variant="h3">{schoolData.name}</Typography></div>
@@ -71,8 +88,8 @@ const School = ({ schoolData, _getSchoolDetails }) => {
                         </Typography>
                     </Paper>
 
-                    <Address data={schoolData.address}></Address>
-                    <Contact data={schoolData.contact}></Contact>
+                    <Address data={schoolData.address} saveHandler={saveAddressChange} ></Address>
+                    {/* <Contact data={schoolData.contact}></Contact> */}
                 </div>
 
 
