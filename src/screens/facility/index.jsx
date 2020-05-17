@@ -5,6 +5,7 @@ import Actionbar from '../../common/components/Actionbar-add';
 import Page from '../../common/components/Page';
 import MUIDatatable from 'mui-datatables';
 import FacilityForm from './FacilityForm';
+import { useEffect } from 'react';
 
 const styles = theme => ({
     root: {
@@ -33,6 +34,10 @@ const Facility = () => {
     const refreshDataHandler = () => {
         setInitialLoad(true)
     }
+
+    useEffect(() => {
+
+    }, [])
 
 
     const options = {
