@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import MUIDatatable from 'mui-datatables';
+import Page from '../../common/components/Page'
 import PageHeader from '../../common/components/PageHeader';
 import Address from '../../common/components/Address';
 import Contact from '../../common/components/contact';
@@ -112,7 +113,7 @@ const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails, _updateEd
 
 
     return (
-        <div className={classes.root}>
+        <Page >
             <PageHeader title="School" >
                 <Actionbar mode={actionMode} changeMode={setActionMode} saveBtnHndlr={saveSchoolChangesToDB} refreshHndlr={refreshDataHandler} />
             </PageHeader>
@@ -141,7 +142,7 @@ const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails, _updateEd
                 </div> */}
 
             </div>
-        </div>
+        </Page>
     )
 }
 

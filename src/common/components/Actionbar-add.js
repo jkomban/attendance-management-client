@@ -7,6 +7,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import CancelIcon from '@material-ui/icons/Cancel'
 import PrintIcon from '@material-ui/icons/Print'
 import RefreshIcon from '@material-ui/icons/Refresh'
+import AddIcon from '@material-ui/icons/AddCircle'
 
 const styles = theme => ({
     root: {
@@ -25,6 +26,14 @@ const Actionbar = ({ mode = false, changeMode, saveBtnHndlr, refreshHndlr }) => 
 
     return (
         <Box className={classes.root}>
+            <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                className={classes.button}
+                startIcon={<AddIcon />}
+                onClick={() => { }}
+            > Add</Button>
             {!mode &&
                 <Button
                     variant="contained"
@@ -48,7 +57,7 @@ const Actionbar = ({ mode = false, changeMode, saveBtnHndlr, refreshHndlr }) => 
                     > Save</Button>
                     <Button
                         variant="contained"
-                        color="secondary"
+                        color="default"
                         size="small"
                         className={classes.button}
                         startIcon={<CancelIcon />}

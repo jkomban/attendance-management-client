@@ -6,6 +6,7 @@ const style = theme => ({
     offset: theme.mixins.toolbar,
     contentContainer: {
         display: 'flex',
+        height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     }
 })
 

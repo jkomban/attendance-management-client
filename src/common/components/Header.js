@@ -8,7 +8,7 @@ const Header = ({ title, toggleNavbar, open }) => {
     return (
         <AppBar position="fixed" >
             <Toolbar>
-                <IconButton color="inherit" aria-label="Menu" onClick={toggleNavbar}>
+                <IconButton aria-label="Menu" onClick={toggleNavbar}>
                     {open ? <MenuOpen /> : <MenuIcon />}
                 </IconButton>
                 <Typography variant="h5" color="inherit" >

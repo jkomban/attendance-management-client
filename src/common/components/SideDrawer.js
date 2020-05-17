@@ -8,7 +8,7 @@ import ViewList from '@material-ui/icons/ViewList'
 
 const style = theme => ({
     root: {
-        height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+
         width: '100%',
         maxWidth: 250,
         background: theme.palette.primary.light

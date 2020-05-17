@@ -4,13 +4,20 @@ import {
     MuiThemeProvider
 } from '@material-ui/core/styles'
 
+// Color customization
+// https://material-ui.com/customization/color/
 export const theme = createMuiTheme({
+    overrides: {
+        MUIDataTableBodyCell: {
+            backgroundColor: 'red'
+        }
+    },
     palette: {
-        type: 'light',
+        type: 'dark',
         primary: {
-            main: '#71A173'
+            main: '#1b5e20'
         },
-        secondary: { main: '#FFC107' },
+        secondary: { main: '#03a9f4' },
 
         error: { main: '#ca0909' },
 
