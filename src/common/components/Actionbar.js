@@ -18,32 +18,43 @@ const styles = theme => ({
 })
 const useStyle = makeStyles(styles);
 
-const Actionbar = ({ mode = false, changeMode }) => {
+const Actionbar = ({ mode = false, changeMode, saveBtnHndlr, refreshHndlr }) => {
     const classes = useStyle()
     console.log("ACTION BAR " + mode);
 
 
     return (
         <Box className={classes.root}>
-            <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                className={classes.button}
-                startIcon={mode ? <EditIcon /> : <SaveIcon />}
-                onClick={() => changeMode(!mode)}
-            > {mode ? 'Save' : 'Edit'}</Button>
-
-            {mode &&
-                /* Show cancel button only when edit mode is true (cancel)*/
+            {!mode &&
                 <Button
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     size="small"
                     className={classes.button}
-                    startIcon={<CancelIcon />}
+                    startIcon={<EditIcon />}
                     onClick={() => changeMode(true)}
-                > cancel</Button>
+                > Edit</Button>
+            }
+            {mode &&
+                /* Show cancel button only when edit mode is true (cancel)*/
+                <React.Fragment>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        className={classes.button}
+                        startIcon={<CancelIcon />}
+                        onClick={saveBtnHndlr}
+                    > Save</Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        className={classes.button}
+                        startIcon={<CancelIcon />}
+                        onClick={() => changeMode(false)}
+                    > cancel</Button>
+                </React.Fragment>
             }
             <Button
                 variant="contained"
@@ -57,7 +68,7 @@ const Actionbar = ({ mode = false, changeMode }) => {
                 size="small"
                 className={classes.button}
                 startIcon={<RefreshIcon />}
-                onClick={() => { }}
+                onClick={refreshHndlr}
             > Refresh</Button>
 
         </Box>
