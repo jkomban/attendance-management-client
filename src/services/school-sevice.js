@@ -5,7 +5,6 @@ const getSchoolDetails = async () => {
     let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_SCHOOL_SRVC: serviceName } = Config.config
     const serviceURL = `${backendBase}/${basePath}/${serviceName}`
     console.log(`getSchoolDetails() - ${serviceURL}`)
-    console.log(Config.config)
     let response = {}
     try {
         response = await axios.get(serviceURL)
@@ -23,7 +22,6 @@ const updateSchoolDetails = async (content) => {
     let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_SCHOOL_SRVC: serviceName } = Config.config
     const serviceURL = `${backendBase}/${basePath}/${serviceName}`
     console.log(`updateSchoolDetails() - ${serviceURL}`)
-    console.log(Config.config)
     let response = {}
     try {
         response = await axios.put(serviceURL, content)

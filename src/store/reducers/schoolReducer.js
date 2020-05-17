@@ -13,7 +13,8 @@ export const schoolReducer = (state = initialSchoolState, action) => {
         case SCHOOL_ACTIONS.RETRIEVE_SCHOOLS:
             return { ...state, ...action.data }
         case SCHOOL_ACTIONS.UPDATE_SCHOOLS:
-            console.log("School details updated successfully :)")
+            return state
+        case SCHOOL_ACTIONS.EDIT_INFO:
             return { ...state, ...action.data }
         default:
             return state;

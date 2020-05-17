@@ -22,7 +22,7 @@ const useStyles = makeStyles(styles)
 
 const Address = ({ mode, address, addressHandler, stateHandler }) => {
     const classes = useStyles()
-    console.log(`Inside Address ${JSON.stringify(address)}`)
+    // console.log(`Inside Address`)
 
     return (
 

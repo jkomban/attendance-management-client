@@ -6,7 +6,7 @@ import MUIDatatable from 'mui-datatables';
 import PageHeader from '../../common/components/PageHeader';
 import Address from '../../common/components/Address';
 import Contact from '../../common/components/contact';
-import { getSchoolDetail, updateSchoolDetail } from '../../store/actions/school-actions'
+import { getSchoolDetail, updateSchoolDetail, updateEditInfo } from '../../store/actions/school-actions'
 import { Typography, Paper } from '@material-ui/core';
 import Actionbar from '../../common/components/Actionbar';
 import { useState } from 'react';
@@ -33,72 +33,53 @@ const styles = theme => {
 }
 const useStyles = makeStyles(styles)
 
-const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails }) => {
-    // const [address, setAddress] = useState(schoolData.address);
+const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails, _updateEditInfo }) => {
     const classes = useStyles()
     const [actionMode, setActionMode] = useState(true);
     const [initialLoad, setInitialLoad] = useState(true)
-    // _getSchoolDetails()
 
-    console.log(`School details here..`)
-    console.log(schoolData)
+    // console.log(`School details here..`)
+    // console.log(schoolData)
 
     const columns = ["id", "Name", "Address", "Phone #", "Primary Email", "Fax"]
     let data = [];
 
 
-    const saveSchoolChanges = async () => {
+    const saveSchoolChangesToDB = async () => {
         console.log("Changes saved to DB");
-        // setActionMode(false)
-        // const newSchoolInfo = { ...schoolData, address }
-        // console.log(newSchoolInfo)
-        // await _updateSchoolDetails(address)
+        await _updateSchoolDetails(schoolData)
+        setActionMode(false)
     }
 
 
     const dummyHandler = () => { }
+
     const refreshDataHandler = () => {
         setInitialLoad(true)
     }
 
     const stateHandler = e => {
         e.preventDefault()
-        const { address } = { schoolData }
-        address.state.code = e.target.value
-        schoolData.address = address;
-        // _updateSchoolDetails()
-        // setAddress(newAddress)
-        // saveHandler(newAddress)
+        const newSchoolData = JSON.parse(JSON.stringify(schoolData))
+        newSchoolData.address.state.code = e.target.value
+        _updateEditInfo(newSchoolData)
     }
 
     const addressHandler = (event) => {
-        console.log(`Inside addressHandler`)
         event.preventDefault()
         const targetName = event.target.name
         const targetValue = event.target.value
         const newSchoolData = JSON.parse(JSON.stringify(schoolData))
         newSchoolData.address[targetName] = targetValue
-
-        console.log(newSchoolData)
-        _updateSchoolDetails(newSchoolData)
-        // setAddress(newAddress)
-        // saveHandler(newAddress)
-    }
-
-    const saveAddressChange = (newAddress) => {
-        console.log("New address received")
-        console.log(newAddress)
-        // setAddress(newAddress)
+        _updateEditInfo(newSchoolData)
     }
 
     useEffect(() => {
         const getDetails = async () => {
-            console.log("1111111111111111111")
             setInitialLoad(false)
             await _getSchoolDetails()
             // setAddress(schoolData.address)
         }
-        console.log(`------- USEEFFECT `)
 
 
         if (initialLoad)
@@ -118,7 +99,7 @@ const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails }) => {
     return (
         <div className={classes.root}>
             <PageHeader title="School" >
-                <Actionbar mode={actionMode} changeMode={setActionMode} saveBtnHndlr={saveSchoolChanges} refreshHndlr={refreshDataHandler} />
+                <Actionbar mode={actionMode} changeMode={setActionMode} saveBtnHndlr={saveSchoolChangesToDB} refreshHndlr={refreshDataHandler} />
             </PageHeader>
             <div className={classes.container}>
                 <div id="school-info" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -134,7 +115,7 @@ const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails }) => {
                     </Paper>
 
                     <Address address={schoolData.address} addressHandler={addressHandler} stateHandler={stateHandler} ></Address>
-                    {/* <Contact data={schoolData.contact}></Contact> */}
+                    <Contact data={schoolData.contact}></Contact>
                 </div>
 
 
@@ -153,8 +134,7 @@ const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails }) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(`School.mapStateToProps() - ${JSON.stringify(state)}`)
-    console.log(state);
+    // console.log(state);
 
     return {
         schoolData: state.school
@@ -165,6 +145,7 @@ const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
         _getSchoolDetails: getSchoolDetail,
         _updateSchoolDetails: newData => updateSchoolDetail(newData),
+        _updateEditInfo: updateEditInfo
     }, dispatch)
 }
 

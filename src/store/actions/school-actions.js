@@ -3,7 +3,8 @@ const SCHOOL_ACTIONS = {
     'RETRIEVE_SCHOOLS': 'RETRIEVE_SCHOOLS',
     'ADD_SCHOOLS': 'ADD_SCHOOLS',
     'UPDATE_SCHOOLS': 'UPDATE_SCHOOLS',
-    'DELETE_SCHOOLS': 'DELETE_SCHOOLS'
+    'DELETE_SCHOOLS': 'DELETE_SCHOOLS',
+    'EDIT_INFO': 'EDIT_INFO'
 }
 
 const getSchoolDetail = () => {
@@ -22,15 +23,12 @@ const getSchoolDetail = () => {
 }
 
 const updateSchoolDetail = (data) => {
-    console.log(data)
     return async (dispatch) => {
-        console.log(2)
         try {
-            // const response = await updateSchoolDetails(data)
+            await updateSchoolDetails(data)
             // console.log("RESULT OBTAINED : ")
             // console.log(data)
-            const newData= {...data}
-            dispatch({ type: SCHOOL_ACTIONS.UPDATE_SCHOOLS, data: newData })
+            dispatch({ type: SCHOOL_ACTIONS.UPDATE_SCHOOLS })
         } catch (e) {
             console.error(e);
             console.error("school-actions.getSchoolDetails():: ERROR");
@@ -39,4 +37,10 @@ const updateSchoolDetail = (data) => {
     }
 }
 
-export { SCHOOL_ACTIONS, getSchoolDetail, updateSchoolDetail }
+const updateEditInfo = (data) => {
+    return async (dispatch) => {
+        dispatch({ type: SCHOOL_ACTIONS.EDIT_INFO, data: data })
+    }
+}
+
+export { SCHOOL_ACTIONS, getSchoolDetail, updateSchoolDetail, updateEditInfo }

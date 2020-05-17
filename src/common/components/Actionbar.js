@@ -20,7 +20,7 @@ const useStyle = makeStyles(styles);
 
 const Actionbar = ({ mode = false, changeMode, saveBtnHndlr, refreshHndlr }) => {
     const classes = useStyle()
-    console.log("ACTION BAR " + mode);
+    // console.log("ACTION BAR " + mode);
 
 
     return (
