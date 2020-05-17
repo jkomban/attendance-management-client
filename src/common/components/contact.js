@@ -8,10 +8,11 @@ import Typography from '@material-ui/core/Typography';
 const styles = theme => ({
     container: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-evenly',
-        padding: '25px 0px',
-        margin: '10px 10px'
+        padding: '16px 16px',
+        margin: '10px 10px',
+        minWidth: '30%'
     },
     containerLabel: {
         color: theme.palette.action.active,
@@ -21,68 +22,61 @@ const styles = theme => ({
 
 const useStyles = makeStyles(styles)
 
-const Contact = ({ data }) => {
+const Contact = ({ mode = false, data, contactHandler }) => {
     const classes = useStyles()
 
-    const handleChange = (event) => {
-        event.preventDefault()
-        const targetName = event.target.name
-        const targetValue = event.target.value
-        console.log(`handleChange()-> [${targetName}:${targetValue}] `)
-    }
-
     return (
-        <Paper className={classes.container} elevation={3}>
+        <Paper className={classes.container} elevation={3} >
             <Typography className={classes.containerLabel}>Contact</Typography>
             <TextField
                 id="contact_ph_1_id"
                 name="phone1"
                 label="Phone#1"
                 margin="normal"
-                variant="filled"
-                value={data && data.phone1}
+                value={data.phone1 || ''}
                 className={classes.textField}
-                onChange={handleChange}
+                onChange={contactHandler}
+                disabled={!mode}
             />
             <TextField
                 id="contact_ph_2_id"
                 name="phone2"
                 label="Phone#2"
                 margin="normal"
-                variant="filled"
-                value={data && data.phone2}
+                value={data.phone2 || ''}
                 className={classes.textField}
-                onChange={handleChange}
+                onChange={contactHandler}
+                disabled={!mode}
             />
             <TextField
                 id="contact_fac_id"
                 name="fax"
                 label="Fax"
                 margin="normal"
-                variant="filled"
-                value={data && data.fax}
+                value={data.fax || ''}
                 className={classes.textField}
-                onChange={handleChange}
+                onChange={contactHandler}
+                disabled={!mode}
             />
             <TextField
                 id="contact_email_1_id"
                 name="email1"
                 label="Email#1"
                 margin="normal"
-                variant="filled"
-                value={data && data.email1}
+                value={data.email1 || ''}
                 className={classes.textField}
-                onChange={handleChange}
+                onChange={contactHandler}
+                disabled={!mode}
             />
             <TextField
                 id="contact_email_2_id"
                 name="email2"
                 label="Email#2"
                 margin="normal"
-                variant="filled"
-                value={data && data.email2}
+                value={data.email2 || ''}
                 className={classes.textField}
-                onChange={handleChange}
+                onChange={contactHandler}
+                disabled={!mode}
             />
 
         </Paper>
