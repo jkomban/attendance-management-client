@@ -7,10 +7,11 @@ import { Typography } from '@material-ui/core'
 const styles = theme => ({
     container: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-evenly',
-        padding: '25px 0px',
-        margin: '10px 10px'
+        padding: '16px 16px',
+        margin: '10px 10px',
+        minWidth: '30%'
     },
     containerLabel: {
         color: theme.palette.action.active,
@@ -22,12 +23,12 @@ const useStyles = makeStyles(styles)
 
 const Address = ({ mode, address, addressHandler, stateHandler }) => {
     const classes = useStyles()
-    // console.log(`Inside Address`)
+    console.log(`Inside Address`)
 
     return (
 
-        <Paper className={classes.container} elevation={3}>
-            <Typography className={classes.containerLabel}>Address</Typography>
+        <Paper className={classes.container} elevation={3} disabled={!mode}>
+            <Typography className={classes.containerLabel}>Address : {String(mode)} </Typography>
             <TextField
                 id="address-line-1-id"
                 name="addressLine1"
@@ -36,6 +37,7 @@ const Address = ({ mode, address, addressHandler, stateHandler }) => {
                 className={classes.textField}
                 value={address.addressLine1 || ''}
                 onChange={addressHandler}
+                disabled={!mode}
             />
             <TextField
                 id="address-line-2-id"
@@ -45,6 +47,7 @@ const Address = ({ mode, address, addressHandler, stateHandler }) => {
                 className={classes.textField}
                 value={address.addressLine2 || ''}
                 onChange={addressHandler}
+                disabled={!mode}
             />
             <TextField
                 id="address-city-id"
@@ -54,6 +57,7 @@ const Address = ({ mode, address, addressHandler, stateHandler }) => {
                 className={classes.textField}
                 value={address.city || ''}
                 onChange={addressHandler}
+                disabled={!mode}
             />
 
             <TextField
@@ -64,6 +68,7 @@ const Address = ({ mode, address, addressHandler, stateHandler }) => {
                 className={classes.textField}
                 value={address.state.code || ''}
                 onChange={stateHandler}
+                disabled={!mode}
             />
             <TextField
                 id="address-zipcode-id"
@@ -73,6 +78,7 @@ const Address = ({ mode, address, addressHandler, stateHandler }) => {
                 className={classes.textField}
                 value={address.zipCode || ''}
                 onChange={addressHandler}
+                disabled={!mode}
             />
         </Paper>
     )
