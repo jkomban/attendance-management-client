@@ -9,7 +9,8 @@ let config = {
     "REACT_APP_BACKEND": 'http://localhost:8080',
     "REACT_APP_NAME_BASE": process.env.REACT_APP_NAME_BASE,
     "REACT_APP_STUDENT_SRVC": process.env.REACT_APP_STUDENT_SRVC,
-    "REACT_APP_SCHOOL_SRVC": process.env.REACT_APP_SCHOOL_SRVC
+    "REACT_APP_SCHOOL_SRVC": process.env.REACT_APP_SCHOOL_SRVC,
+    "REACT_APP_FACILITY_SRVC": process.env.REACT_APP_FACILITY_SRVC
 }
 
 function isLocalHost(hostname) {

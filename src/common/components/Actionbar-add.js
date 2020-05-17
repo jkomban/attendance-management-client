@@ -19,7 +19,7 @@ const styles = theme => ({
 })
 const useStyle = makeStyles(styles);
 
-const Actionbar = ({ mode = false, changeMode, saveBtnHndlr, refreshHndlr }) => {
+const Actionbar = ({ mode = false, changeMode, saveBtnHndlr, refreshHndlr, addDataHandler }) => {
     const classes = useStyle()
     // console.log("ACTION BAR " + mode);
 
@@ -32,7 +32,7 @@ const Actionbar = ({ mode = false, changeMode, saveBtnHndlr, refreshHndlr }) => 
                 size="small"
                 className={classes.button}
                 startIcon={<AddIcon />}
-                onClick={() => { }}
+                onClick={addDataHandler}
             > Add</Button>
             {!mode &&
                 <Button

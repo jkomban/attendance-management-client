@@ -2,9 +2,9 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core'
 
 
-const FacilityForm = () => {
+const FacilityForm = ({ isAddMode }) => {
     return (
-        <div hidden={true}>
+        <div hidden={!isAddMode}>
             Facility form comes here...
         </div>
     )

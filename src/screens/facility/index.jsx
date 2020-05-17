@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core'
 import PageHeader from '../../common/components/PageHeader'
 import Actionbar from '../../common/components/Actionbar-add';
@@ -6,6 +8,7 @@ import Page from '../../common/components/Page';
 import MUIDatatable from 'mui-datatables';
 import FacilityForm from './FacilityForm';
 import { useEffect } from 'react';
+import { getAllFacilityDetail } from '../../store/actions/facility-action'
 
 const styles = theme => ({
     root: {
@@ -17,13 +20,25 @@ const styles = theme => ({
 })
 const useStyles = makeStyles(styles)
 
-const Facility = () => {
+const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
     const [actionMode, setActionMode] = useState(false)
+    const [isAddMode, setAddMode] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
+    const [transformedData, setTransformedData] = useState([])
     const classes = useStyles()
-    const columns = ["id", "Name", "Address", "Phone #", "Primary Email", "Fax"]
+    const columns = [
+        { name: "id", label: 'ID' },
+        { name: "name", label: 'Name' },
+        { name: "address.addressLine1", label: 'Address' },
+        { name: "address.addressLine2", label: 'Address' },
+        { name: "contact.phone1", label: 'Phone#1' },
+        { name: "contact.fax", label: 'Fax' },
+        { name: "contact.email1", label: 'Email#1' },
+        { name: "contact.email2", label: 'Email#2' },
+    ]
     let data = [];
     const dummyHandler = () => { }
+    console.log(faciliesData)
 
 
     const saveSchoolChangesToDB = async () => {
@@ -31,13 +46,27 @@ const Facility = () => {
         setActionMode(false)
     }
 
+    const addDataHandler = () => {
+        console.log("Add button clicked");
+
+        setAddMode(!isAddMode)
+    }
+
     const refreshDataHandler = () => {
         setInitialLoad(true)
     }
 
-    useEffect(() => {
 
-    }, [])
+    useEffect(() => {
+        const getDetails = async () => {
+            setInitialLoad(false)
+            await _getFacilityDetails()
+        }
+
+        if (initialLoad)
+            getDetails()
+    }, [faciliesData, initialLoad])
+
 
 
     const options = {
@@ -52,22 +81,35 @@ const Facility = () => {
     return (
         <Page>
             <PageHeader title="Facilities" >
-                <Actionbar mode={actionMode} changeMode={setActionMode} saveBtnHndlr={saveSchoolChangesToDB} refreshHndlr={refreshDataHandler} />
+                <Actionbar mode={actionMode} changeMode={setActionMode} saveBtnHndlr={saveSchoolChangesToDB} refreshHndlr={refreshDataHandler} addDataHandler={addDataHandler} />
             </PageHeader>
 
-            <div style={{ margin: '20px 25px', display: 'flex', flexDirection: 'row', flexWrap: "nowrap", flexGrow: 12 }}>
+            <div style={{ margin: '20px 25px',  flexDirection: 'row', flexWrap: "nowrap", flexGrow: 12 }}>
                 <MUIDatatable
                     title={'Facility List'}
                     columns={columns}
-                    data={data}
+                    data={faciliesData}
                     options={options}
-                    style={{ flexGrow: 12, backgroundColor: 'red', color: 'red' }}
+                    // style={{ flexGrow: 12, backgroundColor: 'red', color: 'red' }}
                 />
-                <FacilityForm />
+                <FacilityForm isAddMode={isAddMode} />
             </div>
 
         </Page>
     )
 }
 
-export default Facility;
+const mapStateToProps = (state) => {
+    return {
+        faciliesData: state.facilities
+    }
+}
+
+const mapDispatachToProps = (dispatch) => {
+    return bindActionCreators({
+        _getFacilityDetails: getAllFacilityDetail
+    }, dispatch)
+}
+
+
+export default connect(mapStateToProps, mapDispatachToProps)(Facility);
