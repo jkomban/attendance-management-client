@@ -1,6 +1,6 @@
 import { STUDENT_ACTIONS } from '../actions/student-actions'
 
-const initialStudentsState = []
+export const initialStudentsState = []
 
 export default (state = initialStudentsState, action) => {
     // console.log(`StudentsReducer() - state[${JSON.stringify(state)}] action[${JSON.stringify(action)}]`)

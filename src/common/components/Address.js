@@ -20,35 +20,9 @@ const styles = theme => ({
 
 const useStyles = makeStyles(styles)
 
-const Address = ({ mode, data, saveHandler }) => {
-    const [address, setAddress] = useState(data)
+const Address = ({ mode, address, addressHandler, stateHandler }) => {
     const classes = useStyles()
-
-    useEffect(() => {
-        setAddress(data)
-
-    }, [data])
-
-    const stateHandler = e => {
-        e.preventDefault()
-        const newAddress = { ...address }
-        newAddress.state.code = e.target.value
-        setAddress(newAddress)
-        saveHandler(newAddress)
-    }
-
-    const addressHandler = (event) => {
-        event.preventDefault()
-        const targetName = event.target.name
-        const targetValue = event.target.value
-        address[targetName] = targetValue
-        const newAddress = { ...address }
-        newAddress[targetName] = targetValue
-        setAddress(newAddress)
-        saveHandler(newAddress)
-    }
-
-    console.log(`Inside Address ${JSON.stringify(data)}`)
+    console.log(`Inside Address ${JSON.stringify(address)}`)
 
     return (
 

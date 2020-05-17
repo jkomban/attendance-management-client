@@ -6,7 +6,7 @@ import MUIDatatable from 'mui-datatables';
 import PageHeader from '../../common/components/PageHeader';
 import Address from '../../common/components/Address';
 import Contact from '../../common/components/contact';
-import { getSchoolDetail } from '../../store/actions/school-actions'
+import { getSchoolDetail, updateSchoolDetail } from '../../store/actions/school-actions'
 import { Typography, Paper } from '@material-ui/core';
 import Actionbar from '../../common/components/Actionbar';
 import { useState } from 'react';
@@ -33,10 +33,12 @@ const styles = theme => {
 }
 const useStyles = makeStyles(styles)
 
-const School = ({ schoolData, _getSchoolDetails }) => {
-    const [address, setAddress] = useState(schoolData.address);
+const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails }) => {
+    // const [address, setAddress] = useState(schoolData.address);
     const classes = useStyles()
     const [actionMode, setActionMode] = useState(true);
+    const [initialLoad, setInitialLoad] = useState(true)
+    // _getSchoolDetails()
 
     console.log(`School details here..`)
     console.log(schoolData)
@@ -45,20 +47,63 @@ const School = ({ schoolData, _getSchoolDetails }) => {
     let data = [];
 
 
+    const saveSchoolChanges = async () => {
+        console.log("Changes saved to DB");
+        // setActionMode(false)
+        // const newSchoolInfo = { ...schoolData, address }
+        // console.log(newSchoolInfo)
+        // await _updateSchoolDetails(address)
+    }
 
 
     const dummyHandler = () => { }
+    const refreshDataHandler = () => {
+        setInitialLoad(true)
+    }
+
+    const stateHandler = e => {
+        e.preventDefault()
+        const { address } = { schoolData }
+        address.state.code = e.target.value
+        schoolData.address = address;
+        // _updateSchoolDetails()
+        // setAddress(newAddress)
+        // saveHandler(newAddress)
+    }
+
+    const addressHandler = (event) => {
+        console.log(`Inside addressHandler`)
+        event.preventDefault()
+        const targetName = event.target.name
+        const targetValue = event.target.value
+        const newSchoolData = JSON.parse(JSON.stringify(schoolData))
+        newSchoolData.address[targetName] = targetValue
+
+        console.log(newSchoolData)
+        _updateSchoolDetails(newSchoolData)
+        // setAddress(newAddress)
+        // saveHandler(newAddress)
+    }
 
     const saveAddressChange = (newAddress) => {
         console.log("New address received")
         console.log(newAddress)
-        setAddress(newAddress)
+        // setAddress(newAddress)
     }
 
     useEffect(() => {
-        _getSchoolDetails()
+        const getDetails = async () => {
+            console.log("1111111111111111111")
+            setInitialLoad(false)
+            await _getSchoolDetails()
+            // setAddress(schoolData.address)
+        }
         console.log(`------- USEEFFECT `)
-    }, [])
+
+
+        if (initialLoad)
+            getDetails();
+    }, [schoolData, initialLoad])
 
     const options = {
         filter: true,
@@ -73,7 +118,7 @@ const School = ({ schoolData, _getSchoolDetails }) => {
     return (
         <div className={classes.root}>
             <PageHeader title="School" >
-                <Actionbar mode={actionMode} changeMode={setActionMode} />
+                <Actionbar mode={actionMode} changeMode={setActionMode} saveBtnHndlr={saveSchoolChanges} refreshHndlr={refreshDataHandler} />
             </PageHeader>
             <div className={classes.container}>
                 <div id="school-info" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -88,7 +133,7 @@ const School = ({ schoolData, _getSchoolDetails }) => {
                         </Typography>
                     </Paper>
 
-                    <Address data={schoolData.address} saveHandler={saveAddressChange} ></Address>
+                    <Address address={schoolData.address} addressHandler={addressHandler} stateHandler={stateHandler} ></Address>
                     {/* <Contact data={schoolData.contact}></Contact> */}
                 </div>
 
@@ -118,7 +163,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
-        _getSchoolDetails: getSchoolDetail
+        _getSchoolDetails: getSchoolDetail,
+        _updateSchoolDetails: newData => updateSchoolDetail(newData),
     }, dispatch)
 }
 

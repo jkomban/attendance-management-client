@@ -1,5 +1,5 @@
 import { deleteStudentDetails, updateStudentDetails, getAllStudentDetails } from './student'
-import { getSchoolDetails } from './school-sevice'
+import { getSchoolDetails, updateSchoolDetails } from './school-sevice'
 import ConfigS from './config'
 
 export {
@@ -7,5 +7,6 @@ export {
     updateStudentDetails,
     getAllStudentDetails,
     getSchoolDetails,
+    updateSchoolDetails,
     ConfigS
 }
