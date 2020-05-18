@@ -27,10 +27,12 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node app.js",
+    "start:local": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "react-scripts build && node helper-script.js"
   },
   "eslintConfig": {
     "extends": "react-app"

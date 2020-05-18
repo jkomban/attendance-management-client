@@ -35,7 +35,7 @@ class App extends Component {
       return (
         <div>
           <h1>
-            Failed to Load the Page
+            Failed to Load the Application configuration.
           </h1>
         </div>
       )
