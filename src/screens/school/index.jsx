@@ -24,7 +24,6 @@ const styles = theme => {
             margin: '10px 20px',
         },
         schoolDetails: {
-            height: '30%',
             padding: '0px 25px',
             textAlign: 'center',
         }
@@ -130,16 +129,6 @@ const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails, _updateEd
                         <Contact mode={actionMode} data={schoolData.contact} contactHandler={contactHandler}></Contact>
                     </div>
                 </div>
-
-
-                {/* <div style={{ margin: '10px 10px' }}>
-                    < MUIDatatable
-                        title={'Facilities'}
-                        columns={columns}
-                        data={data}
-                        options={options}
-                    />
-                </div> */}
 
             </div>
         </Page>
