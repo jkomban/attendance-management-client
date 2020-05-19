@@ -76,7 +76,7 @@ const SideDrawer = () => {
 
 
     return (
-        <Paper elevation={3} className={classes.root} >
+        <Paper elevation={3} className={classes.root} square >
             <List >
                 <MenuItem
                     listIcon={<Dashboard />}

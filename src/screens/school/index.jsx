@@ -5,8 +5,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import MUIDatatable from 'mui-datatables';
 import Page from '../../common/components/Page'
 import PageHeader from '../../common/components/PageHeader';
-import Address from '../../common/components/Address';
-import Contact from '../../common/components/contact';
+import AddressForm from '../../common/components/AddressForm';
+import ContactForm from '../../common/components/ContactForm';
 import { getSchoolDetail, updateSchoolDetail, updateEditInfo } from '../../store/actions/school-actions'
 import { Typography, Paper, TextField } from '@material-ui/core';
 import Actionbar from '../../common/components/Actionbar';
@@ -125,8 +125,8 @@ const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails, _updateEd
                         </TextField>
                     </Paper>
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <Address mode={actionMode} address={schoolData.address} addressHandler={addressHandler} stateHandler={stateHandler} ></Address>
-                        <Contact mode={actionMode} data={schoolData.contact} contactHandler={contactHandler}></Contact>
+                        <AddressForm mode={actionMode} address={schoolData.address} addressHandler={addressHandler} stateHandler={stateHandler} ></AddressForm>
+                        <ContactForm mode={actionMode} data={schoolData.contact} contactHandler={contactHandler}></ContactForm>
                     </div>
                 </div>
 

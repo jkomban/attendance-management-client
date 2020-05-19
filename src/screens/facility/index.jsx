@@ -10,12 +10,22 @@ import FacilityForm from './FacilityForm';
 import { useEffect } from 'react';
 import { getAllFacilityDetail } from '../../store/actions/facility-action'
 
-const styles = theme => ({
+const styles = () => ({
     root: {
         background: 'yellow'
     },
     muiTable: {
         flexGrow: 12
+    },
+    container: {
+        margin: '20px 25px',
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: "nowrap",
+        flexGrow: 1
+    },
+    muiContainer: {
+        flexGrow: 8
     }
 })
 const useStyles = makeStyles(styles)
@@ -25,7 +35,9 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
     const [isAddMode, setAddMode] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
     const [transformedData, setTransformedData] = useState([])
+    const [selectedFacility, setSelectedFacility] = useState({ address: { state: {} }, contact: {} })
     const classes = useStyles()
+
     const columns = [
         { name: "id", label: 'ID' },
         { name: "name", label: 'Name' },
@@ -39,6 +51,7 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
     let data = [];
     const dummyHandler = () => { }
     console.log(faciliesData)
+    console.log(selectedFacility)
 
 
     const saveSchoolChangesToDB = async () => {
@@ -65,15 +78,27 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
 
         if (initialLoad)
             getDetails()
-    }, [faciliesData, initialLoad])
+    }, [faciliesData, initialLoad, selectedFacility])
 
 
+    const rowClickHandler = (rowData, rowMeta) => {
+        console.log("Row Clicked")
+        // console.log(rowData)
+        console.log(rowMeta)
+        setSelectedFacility(faciliesData[rowMeta.dataIndex])
+        setAddMode(true)
+    }
+
+    const cellClickHandler = (...rest) => {
+        // console.log("Cell Clicked")
+        // console.log(rest)
+    }
 
     const options = {
         filter: true,
         filterType: 'dropdown',
-        onRowClick: dummyHandler,
-        onCellClick: dummyHandler,
+        onRowClick: rowClickHandler,
+        onCellClick: cellClickHandler,
         onRowsSelect: dummyHandler,
         onRowsDelete: dummyHandler
     }
@@ -84,15 +109,16 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
                 <Actionbar mode={actionMode} changeMode={setActionMode} saveBtnHndlr={saveSchoolChangesToDB} refreshHndlr={refreshDataHandler} addDataHandler={addDataHandler} />
             </PageHeader>
 
-            <div style={{ margin: '20px 25px',  flexDirection: 'row', flexWrap: "nowrap", flexGrow: 12 }}>
-                <MUIDatatable
-                    title={'Facility List'}
-                    columns={columns}
-                    data={faciliesData}
-                    options={options}
-                    // style={{ flexGrow: 12, backgroundColor: 'red', color: 'red' }}
-                />
-                <FacilityForm isAddMode={isAddMode} />
+            <div className={classes.container}>
+                <div className={classes.muiContainer}>
+                    <MUIDatatable
+                        title={'Facility List'}
+                        columns={columns}
+                        data={faciliesData}
+                        options={options}
+                    />
+                </div>
+                {isAddMode && <FacilityForm isEditMode={isAddMode} facility={selectedFacility} />}
             </div>
 
         </Page>
