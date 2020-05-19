@@ -11,7 +11,7 @@ const styles = theme => ({
         justifyContent: 'space-evenly',
         padding: '16px 16px',
         margin: '10px 10px',
-        minWidth: '30%'
+        minWidth: '30%',
     },
     containerLabel: {
         color: theme.palette.action.active,
@@ -27,7 +27,7 @@ const Address = ({ mode, address, addressHandler, stateHandler }) => {
 
     return (
 
-        <Paper className={classes.container} elevation={3} disabled={!mode}>
+        <Paper className={classes.container} elevation={3} disabled={!mode} >
             <Typography className={classes.containerLabel}>Address : {String(mode)} </Typography>
             <TextField
                 id="address-line-1-id"
