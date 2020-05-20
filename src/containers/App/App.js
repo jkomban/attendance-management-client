@@ -1,51 +1,64 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ConfigS } from '../../services'
 import MainLayout from '../../layouts/Main';
-import SideDrawer from '../../common/components/SideDrawer';
-import Header from '../../common/components/Header';
-import AppRouter from '../../routes/Routes';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
+import { getSchoolDetail } from '../../store/actions/school-actions';
 
-class App extends Component {
+const App = ({ schoolData, _getSchoolDetails }) => {
+  // values below are true and false to make sure screen dont show error message when it is being loaded
+  const [isConfigLoaded, setConfigLoaded] = useState(true)
+  const [loadFailed, setLoadFailed] = useState(false)
+  const [initialLoad, setInitialLoad] = useState(true)
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      isConfigLoaded: false
+  useEffect(() => {
+
+    const loadComponent = async () => {
+      try {
+        await ConfigS.setConfiguration();
+        await _getSchoolDetails()
+        setConfigLoaded(true)
+        setLoadFailed(false)
+      } catch (e) {
+        setLoadFailed(false)
+      }
     }
-  }
 
-  loadConfig = async () => {
-    try {
-      await ConfigS.setConfiguration()
-      this.setState({ isConfigLoaded: true, loadFailed: false })
-    } catch (error) {
-      this.setState({ loadFailed: true })
-    }
-  }
+    if (initialLoad)
+      loadComponent()
 
-  componentDidMount() {
-    this.loadConfig()
-  }
-
-  render() {
-    let { isConfigLoaded, loadFailed } = this.state
+  }, [isConfigLoaded, loadFailed])
 
 
-    if (loadFailed || !isConfigLoaded) {
-      return (
-        <div>
+  return (
+    <div>
+      {
+        (loadFailed || !isConfigLoaded) &&
+        < div >
           <h1>
             Failed to Load the Application configuration.
           </h1>
         </div>
-      )
-    } else {
-      return (
+      }
+      {
+        isConfigLoaded &&
         <MainLayout />
-      )
-    }
+      }
+    </div >
+  )
+}
 
+const mapStateToProps = (state) => {
+  return {
+    schoolData: state.school
   }
 }
 
-export default App;
+const mapDispatachToProps = (dispatch) => {
+  return bindActionCreators({
+    _getSchoolDetails: getSchoolDetail
+  }, dispatch)
+}
+
+
+export default connect(mapStateToProps, mapDispatachToProps)(App);
