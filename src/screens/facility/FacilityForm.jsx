@@ -1,7 +1,8 @@
 import React from 'react'
-import { makeStyles, Box, Paper, TextField, Typography } from '@material-ui/core'
+import { makeStyles, Box, Paper, TextField, Typography, Button } from '@material-ui/core'
 import Address from '../../common/components/AddressForm';
 import Contact from '../../common/components/ContactForm';
+import ChevronRightIcon from '@material-ui/icons/ArrowRightTwoTone'
 
 const styles = theme => {
     console.log(theme)
@@ -17,10 +18,15 @@ const styles = theme => {
                 flex: 1
             }
         },
-        textField: {
-            margin: '10px 20px',
+        header: {
             display: 'flex',
-            flex: 1
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            margin: '10px 20px'
+        },
+        textField: {
+            // margin: '10px 20px',
         }
     })
 }
@@ -33,19 +39,23 @@ const FacilityForm = ({ isEditMode, facility }) => {
 
     return (
         <Paper className={classes.root} elevation={5} variant="elevation" >
-            <TextField
-                id="facility-name-id"
-                name="name"
-                label="Facility Name"
-                margin="normal"
-                className={classes.textField}
-                value={facility.name || ''}
-                onChange={() => { }}
-                disabled={!isEditMode}
-            />
+            <div className={classes.header}>
+                <TextField
+                    id="facility-name-id"
+                    name="name"
+                    label="Facility Name"
+                    margin="normal"
+                    className={classes.textField}
+                    value={facility.name || ''}
+                    onChange={() => { }}
+                    disabled={!isEditMode} />
+                {/* <Button variant="contained" size="small" endIcon={<ChevronRightIcon />}>Close</Button> */}
+                <ChevronRightIcon style={{ fontSize: '3em' }} color="primary" />
+            </div>
+
             <div className={classes.contactAddress}>
-                <Address mode={isEditMode} address={facility.address} />
-                <Contact mode={isEditMode} data={facility.contact} contactHandler={() => { }} />
+                <Address mode={isEditMode} address={facility.address } />
+                <Contact mode={isEditMode} data={facility.contact || {}} contactHandler={() => { }} />
             </div>
 
         </Paper>

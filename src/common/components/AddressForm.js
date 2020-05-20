@@ -21,7 +21,7 @@ const styles = theme => ({
 
 const useStyles = makeStyles(styles)
 
-const Address = ({ mode, address, addressHandler, stateHandler }) => {
+const Address = ({ mode, address = { state: {} }, addressHandler, stateHandler }) => {
     const classes = useStyles()
     console.log(`Inside Address`)
 

@@ -30,9 +30,10 @@ const styles = () => ({
 })
 const useStyles = makeStyles(styles)
 
-const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
+const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
     const [actionMode, setActionMode] = useState(false)
     const [isAddMode, setAddMode] = useState(false)
+    const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
     const [transformedData, setTransformedData] = useState([])
     const [selectedFacility, setSelectedFacility] = useState({ address: { state: {} }, contact: {} })
@@ -46,12 +47,11 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
         { name: "contact.phone1", label: 'Phone#1' },
         { name: "contact.fax", label: 'Fax' },
         { name: "contact.email1", label: 'Email#1' },
-        { name: "contact.email2", label: 'Email#2' },
     ]
-    let data = [];
     const dummyHandler = () => { }
     console.log(faciliesData)
     console.log(selectedFacility)
+    console.log(schoolData)
 
 
     const saveSchoolChangesToDB = async () => {
@@ -62,7 +62,7 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
     const addDataHandler = () => {
         console.log("Add button clicked");
 
-        setAddMode(!isAddMode)
+        setAddMode(!setDetailPanel)
     }
 
     const refreshDataHandler = () => {
@@ -73,12 +73,14 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
     useEffect(() => {
         const getDetails = async () => {
             setInitialLoad(false)
-            await _getFacilityDetails()
+            console.log(`Initial Load about to Happen`)
+            console.log(schoolData)
+            await _getFacilityDetails(schoolData.id)
         }
 
         if (initialLoad)
             getDetails()
-    }, [faciliesData, initialLoad, selectedFacility])
+    }, [faciliesData, initialLoad, selectedFacility, schoolData])
 
 
     const rowClickHandler = (rowData, rowMeta) => {
@@ -86,7 +88,7 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
         // console.log(rowData)
         console.log(rowMeta)
         setSelectedFacility(faciliesData[rowMeta.dataIndex])
-        setAddMode(true)
+        setDetailPanel(true)
     }
 
     const cellClickHandler = (...rest) => {
@@ -118,7 +120,7 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
                         options={options}
                     />
                 </div>
-                {isAddMode && <FacilityForm isEditMode={isAddMode} facility={selectedFacility} />}
+                {isDetailPanelOpen && <FacilityForm isEditMode={isAddMode} facility={selectedFacility} />}
             </div>
 
         </Page>
@@ -127,7 +129,8 @@ const Facility = ({ faciliesData = [], _getFacilityDetails }) => {
 
 const mapStateToProps = (state) => {
     return {
-        faciliesData: state.facilities
+        faciliesData: state.facilities,
+        schoolData: state.school
     }
 }
 

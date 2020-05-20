@@ -1,9 +1,9 @@
 import axios from 'axios';
 import Config from './config'
 
-const getAllFacilityDetails = async () => {
+const getAllFacilityDetails = async (schoolID) => {
     let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_FACILITY_SRVC: serviceName } = Config.config
-    const serviceURL = `${backendBase}/${basePath}/${serviceName}`
+    const serviceURL = `${backendBase}/${basePath}/${serviceName}/all/${schoolID}`
     console.log(`getAllFacilityDetails() - ${serviceURL}`)
     let response = {}
     try {

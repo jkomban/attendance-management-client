@@ -7,10 +7,10 @@ const FACILITY_ACTIONS = {
     'EDIT_INFO': 'EDIT_INFO'
 }
 
-const getAllFacilityDetail = () => {
+const getAllFacilityDetail = (schoolID) => {
     return async (dispatch) => {
         try {
-            const data = await getAllFacilityDetails()
+            const data = await getAllFacilityDetails(schoolID)
             dispatch({ type: FACILITY_ACTIONS.RETRIEVE_ALL_FACILITY, data: data })
         } catch (e) {
             console.error(e);
