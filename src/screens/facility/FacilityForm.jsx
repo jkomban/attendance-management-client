@@ -32,7 +32,7 @@ const styles = theme => {
 }
 const useStyles = makeStyles(styles)
 
-const FacilityForm = ({ isEditMode, facility }) => {
+const FacilityForm = ({ isEditMode, facility , panelCloseHandler}) => {
     const classes = useStyles()
     console.log("FacilityForm")
     console.log(facility);
@@ -50,7 +50,7 @@ const FacilityForm = ({ isEditMode, facility }) => {
                     onChange={() => { }}
                     disabled={!isEditMode} />
                 {/* <Button variant="contained" size="small" endIcon={<ChevronRightIcon />}>Close</Button> */}
-                <ChevronRightIcon style={{ fontSize: '3em' }} color="primary" />
+                <ChevronRightIcon style={{ fontSize: '3em' }} color="primary" onClick={panelCloseHandler} />
             </div>
 
             <div className={classes.contactAddress}>

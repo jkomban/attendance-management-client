@@ -37,7 +37,8 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
     const [transformedData, setTransformedData] = useState([])
-    const [selectedFacility, setSelectedFacility] = useState({ address: { state: {} }, contact: {} })
+    const newFacility = { address: { state: {} }, contact: {} }
+    const [selectedFacility, setSelectedFacility] = useState(newFacility)
     const classes = useStyles()
 
     const columns = [
@@ -68,6 +69,14 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
 
     const refreshDataHandler = () => {
         setInitialLoad(true)
+    }
+
+    const closeDetailPanel = () => {
+        setDetailPanel(false)
+    }
+    const openDetailPanelForAdd= ()=>{
+        setSelectedFacility(newFacility)
+        setDetailPanel(true)
     }
 
 
@@ -104,7 +113,7 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
         onCellClick: cellClickHandler,
         onRowsSelect: dummyHandler,
         onRowsDelete: dummyHandler,
-        customToolbar: () => <CustomToolbar />
+        customToolbar: () => <CustomToolbar addHandler={openDetailPanelForAdd} />
     }
 
     return (
@@ -122,7 +131,8 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
                         options={options}
                     />
                 </div>
-                {isDetailPanelOpen && <FacilityForm isEditMode={isAddMode} facility={selectedFacility} />}
+                {isDetailPanelOpen && <FacilityForm isEditMode={isAddMode} facility={selectedFacility}
+                    panelCloseHandler={closeDetailPanel} />}
             </div>
 
         </Page>

@@ -12,19 +12,19 @@ const styles = theme => ({
 const useStyles = makeStyles(styles)
 
 
-const CustomToolbar = () => {
+const CustomToolbar = ({ addHandler }) => {
     const classes = useStyles()
     console.log(`Inside CustomToolbar`)
 
     return (
 
         <React.Fragment>
-            <Tooltip title={"Add"}>
-                <IconButton onClick={() => { }}>
+            <Tooltip title={"Add Facility"}>
+                <IconButton onClick={addHandler}>
                     <AddIcon />
                 </IconButton>
             </Tooltip>
-            <Tooltip title={"Refresh"}>
+            <Tooltip title={"Refresh Table"}>
                 <IconButton onClick={() => { }}>
                     <RefreshIcon />
                 </IconButton>
