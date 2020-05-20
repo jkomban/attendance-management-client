@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core'
 import PageHeader from '../../common/components/PageHeader'
 import Actionbar from '../../common/components/Actionbar-add';
+import CustomToolbar from '../../common/components/CustomToolbar';
 import Page from '../../common/components/Page';
 import MUIDatatable from 'mui-datatables';
 import FacilityForm from './FacilityForm';
@@ -102,7 +103,8 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
         onRowClick: rowClickHandler,
         onCellClick: cellClickHandler,
         onRowsSelect: dummyHandler,
-        onRowsDelete: dummyHandler
+        onRowsDelete: dummyHandler,
+        customToolbar: () => <CustomToolbar />
     }
 
     return (
