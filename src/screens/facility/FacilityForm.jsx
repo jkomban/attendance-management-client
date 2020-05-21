@@ -14,6 +14,8 @@ const styles = theme => {
         },
         contactAddress: {
             display: 'flex',
+            flexDirection: 'column',
+            flexGrow: "wrap",
             "& >div": {
                 flex: 1
             }
@@ -32,7 +34,7 @@ const styles = theme => {
 }
 const useStyles = makeStyles(styles)
 
-const FacilityForm = ({ isEditMode, facility , panelCloseHandler}) => {
+const FacilityForm = ({ isEditMode, facility, panelCloseHandler }) => {
     const classes = useStyles()
     console.log("FacilityForm")
     console.log(facility);
@@ -54,7 +56,7 @@ const FacilityForm = ({ isEditMode, facility , panelCloseHandler}) => {
             </div>
 
             <div className={classes.contactAddress}>
-                <Address mode={isEditMode} address={facility.address } />
+                <Address mode={isEditMode} address={facility.address} />
                 <Contact mode={isEditMode} data={facility.contact || {}} contactHandler={() => { }} />
             </div>
 

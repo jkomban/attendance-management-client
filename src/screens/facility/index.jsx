@@ -45,7 +45,6 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
         { name: "id", label: 'ID' },
         { name: "name", label: 'Name' },
         { name: "address.addressLine1", label: 'Address' },
-        { name: "address.addressLine2", label: 'Address' },
         { name: "contact.phone1", label: 'Phone#1' },
         { name: "contact.fax", label: 'Fax' },
         { name: "contact.email1", label: 'Email#1' },
