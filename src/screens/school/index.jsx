@@ -55,6 +55,10 @@ const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails, _updateEd
         setActionMode(false)
     }
 
+    const toggleEditMode = () => {
+        setActionMode(!actionMode)
+    }
+
 
     const dummyHandler = () => { }
 
@@ -125,8 +129,11 @@ const School = ({ schoolData, _getSchoolDetails, _updateSchoolDetails, _updateEd
                         </TextField>
                     </Paper>
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <AddressForm mode={actionMode} address={schoolData.address} addressHandler={addressHandler} stateHandler={stateHandler} ></AddressForm>
-                        <ContactForm mode={actionMode} data={schoolData.contact} contactHandler={contactHandler}></ContactForm>
+                        <AddressForm isEditMode={actionMode} address={schoolData.address} toggleEditMode={toggleEditMode}
+                            addressHandler={addressHandler} stateHandler={stateHandler} ></AddressForm>
+
+                        <ContactForm isEditMode={actionMode} data={schoolData.contact} toggleEditMode={toggleEditMode}
+                            contactHandler={contactHandler}></ContactForm>
                     </div>
                 </div>
 

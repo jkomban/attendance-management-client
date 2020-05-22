@@ -15,7 +15,7 @@ const styles = theme => {
         contactAddress: {
             display: 'flex',
             flexDirection: 'column',
-            flexGrow: "wrap",
+            flexWrap: "wrap",
             "& >div": {
                 flex: 1
             }
