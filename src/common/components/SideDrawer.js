@@ -1,10 +1,10 @@
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Divider, List, Paper } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import React from 'react'
 import MenuItem from './MenuItem'
-import { Dashboard, Assignment, Person, School, Grain, ExitToApp, SupervisedUserCircle, BarChart, AccountBalance, Business } from '@material-ui/icons'
-import AddCircle from '@material-ui/icons/AddCircle'
-import ViewList from '@material-ui/icons/ViewList'
+import AppMenu from './Menu'
 
 const style = theme => ({
     root: {
@@ -17,136 +17,66 @@ const style = theme => ({
 
 const useStyle = makeStyles(style)
 
-const SideDrawer = () => {
+const SideDrawer = ({ auth }) => {
     const classes = useStyle()
-    // console.log(`Inside sidedrawer`)
-    const ClassSubMenu = [
-        {
-            listIcon: <ViewList />,
-            text: "All Class",
-            routePath: '/classes'
-        }, {
-            listIcon: <AddCircle />,
-            text: "Add Class",
-            routePath: '/classes/add'
-        }];
-    const StudentSubMenu = [
-        {
-            listIcon: <ViewList />,
-            text: "All Students",
-            routePath: '/students'
-        }, {
-            listIcon: <AddCircle />,
-            text: "Add Student",
-            routePath: '/students/add'
-        }];
-    const StaffSubMenu = [
-        {
-            listIcon: <ViewList />,
-            text: "All Staffs",
-            routePath: '/students'
-        }, {
-            listIcon: <AddCircle />,
-            text: "Add Staff",
-            routePath: '/students/add'
-        }];
-    const ParentSubMenu = [
-        {
-            listIcon: <ViewList />,
-            text: "All Parents",
-            routePath: '/parents'
-        }, {
-            listIcon: <BarChart />,
-            text: "Report",
-            routePath: '/parents/report'
-        }];
-
-    const AdministrationSubMenu = [
-        {
-            listIcon: < AccountBalance />,
-            text: "School",
-            routePath: "/school"
-        },
-        {
-            listIcon: < Business />,
-            text: "Facilities",
-            routePath: "/facilities"
-        }
-    ]
-
+    const isAuthenticated = false;
 
     return (
         <Paper elevation={3} className={classes.root} square >
             <List >
-                <MenuItem
-                    listIcon={<Dashboard />}
-                    listText='Dashboard'
-                    routePath={'/dashboard'}
-                    appTitle='Dashboard'>
-                </MenuItem>
-                <Divider />
+                {
+                    <div>
+                        {
+                            AppMenu.map((item, index) => {
+                                const result = (item.needAuth && auth.authenticated) ?
+                                    <div key={index}>
+                                        <MenuItem
+                                            listText={item.listText} routePath={item.routePath}
+                                            listIcon={<item.listIcon />}
+                                            subMenus={item.subMenus}
+                                        />
+                                        <Divider />
+                                    </div>
+                                    : (!item.needAuth && !item.exclAuth) ?
+                                        <div key={index}>
+                                            <MenuItem
+                                                listText={item.listText} routePath={item.routePath}
+                                                listIcon={<item.listIcon />}
+                                                subMenus={item.subMenus}
+                                            />
+                                            <Divider />
+                                        </div>
+                                        : (!item.needAuth && item.exclAuth && !auth.authenticated) ?
+                                            <div key={index}>
+                                                <MenuItem
+                                                    listText={item.listText} routePath={item.routePath}
+                                                    listIcon={<item.listIcon />}
+                                                    subMenus={item.subMenus}
+                                                />
+                                                <Divider />
+                                            </div>
+                                            : <div key={index} />;
+                                return result;
+                            })
+                        }
 
-                <MenuItem
-                    listIcon={<Assignment />}
-                    listText='Class'
-                    routePath={'/classes'}
-                    subMenus={ClassSubMenu}
-                    appTitle='Class Management'
-                >
-                </MenuItem>
-
-                <Divider />
-
-                <MenuItem
-                    listIcon={<School />}
-                    listText='Student'
-                    routePath={'/students'}
-                    subMenus={StudentSubMenu}
-                    appTitle='Student Management'
-                >
-                </MenuItem>
-                <Divider />
-
-                <MenuItem
-                    listIcon={<Person />}
-                    listText='Staff'
-                    routePath={'/staffs'}
-                    subMenus={StaffSubMenu}
-                    appTitle='Staff Management'
-                >
-                </MenuItem>
-                <Divider />
-
-                <MenuItem
-                    listIcon={<SupervisedUserCircle />}
-                    listText='Parents'
-                    routePath={'/parents'}
-                    subMenus={ParentSubMenu}
-                    appTitle='Staff Management'
-                >
-                </MenuItem>
-                <Divider />
-
-                <MenuItem
-                    listIcon={<Grain />}
-                    listText='Administration'
-                    routePath={'/administration'}
-                    subMenus={AdministrationSubMenu}
-                    appTitle='Administration'
-                >
-                </MenuItem>
-                <Divider />
-
-                <Divider />
-                <MenuItem
-                    listIcon={<ExitToApp />}
-                    listText='Exit'
-                    routePath={'/logout'}
-                >
-                </MenuItem>
+                    </div>
+                }
             </List>
         </Paper >
     )
 }
 
-export default SideDrawer
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        auth: state.auth
+    }
+}
+
+const mapDispatachToProps = (dispatch) => {
+    return bindActionCreators({
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatachToProps)(SideDrawer);

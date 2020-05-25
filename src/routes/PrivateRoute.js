@@ -1,23 +1,26 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 
-export const PrivateRoute = ({ component: Component, ...rest }) => {
-    // console.log(rest)
-           
-    if(rest.location.pathname.indexOf("dashboard")>-1){
+const PrivateRoute = ({ auth, component: Component, ...rest }) => {
+    console.log(rest)
+    console.log(auth)
+
+    if (rest.location.pathname.indexOf("dashboard") > -1) {
         console.log("It happened")
-    }else{
+    } else {
         console.log(`It will never happen`)
         // console.log(rest.location.pathname.indexOf("dashboard"))
     }
-    
+
     return (
         <Route
             {...rest}
             render={
                 props =>
-                    localStorage.getItem("authToken") ? (
+                    auth.authenticated ? (
                         <Component {...props} />
                     ) : (
                             <Redirect
@@ -32,3 +35,17 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     )
 
 };
+
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        auth: state.auth
+    }
+}
+
+const mapDispatachToProps = (dispatch) => {
+    return bindActionCreators({
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatachToProps)(PrivateRoute);

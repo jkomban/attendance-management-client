@@ -1,27 +1,27 @@
+import { userNamePassAuthenticate } from '../../services/auth-service';
 
-// import fakeAuth from '../services/auth/fakeAuth'
+const AUTH_ACTIONS = {
+    'USN_PASS_LOGIN': 'USN_PASS_LOGIN',
+}
 
-export default function authenticate(user, pass) {
+
+const authenticate = (request) => {
     // dispatch function reference is used to trigger the state change and re-render of components
     return async (dispatch, getState) => {
-        let state = getState()
-        console.log(`login-action:authenticate() - current State ${JSON.stringify(state)}`)
+        console.log(`login-action:authenticate()`)
         try {
-            // const response = await fakeAuth.authenticate(user, pass)
-            const response = { userid: 'John doe' }
-            const result = loginSuccess(state, response)
-            console.log(`auth-action:loginSuccess() - returned ${JSON.stringify(result)}`)
-            return dispatch(result)
+            const response = await userNamePassAuthenticate(request)
+            console.log(`auth-action:loginSuccess() - returned ${JSON.stringify(response)}`)
+            return dispatch({ type: AUTH_ACTIONS.USN_PASS_LOGIN, data: response })
         } catch (error) {
-            return Promise.reject(error)
+
+            // return Promise.reject(error)
+            /**
+             * TODO
+             * Throw error / dispatch erro and handle
+             */
         }
     }
 }
 
-function loginSuccess(state, response) {
-    console.log(`auth-action:loginSuccess() - `)
-    return {
-        type: 'LOGIN',
-        credentials: response
-    }
-}
+export { authenticate, AUTH_ACTIONS }

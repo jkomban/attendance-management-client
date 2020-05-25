@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import authReducer from './authReducer';
+import authReducer, { initalAuthState } from './authReducer';
 import studentReducer, { initialStudentsState } from './studentsReducer';
 import { schoolReducer, initialSchoolState } from './schoolReducer';
 import { facilityReducer, initialFacilityState } from './facilityReducer';
 
-export { initialSchoolState, initialStudentsState, initialFacilityState };
+export { initialSchoolState, initialStudentsState, initialFacilityState, initalAuthState };
 
 const rootReducer = combineReducers({
     auth: authReducer,
