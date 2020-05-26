@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import GoogleLogin from 'react-google-login';
 import { Link as Router, Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -62,6 +63,15 @@ const Login = ({ _authenticate, auth }) => {
         _authenticate({ userName, password })
     }
 
+    const gAuthSuccess = (content) => {
+        console.log(content)
+        _authenticate(content)
+    }
+
+    const gAuthFailure = (content) => {
+        console.log(content)
+    }
+
 
     return (
 
@@ -116,6 +126,13 @@ const Login = ({ _authenticate, auth }) => {
                     >
                         Sign In
                     </Button>
+                    <GoogleLogin
+                        clientId=""
+                        onSuccess={gAuthSuccess}
+                        onFailure={gAuthFailure}
+                        buttonText="Login"
+                        redirectUri="/home"
+                    />
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">
