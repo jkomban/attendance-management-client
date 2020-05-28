@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './app-axios';
 import Config from './config'
 
 const getSchoolDetails = async () => {
