@@ -1,7 +1,8 @@
-import { userNamePassAuthenticate } from '../../services/auth-service';
+import { userNamePassAuthenticate, logoutUser } from '../../services/auth-service';
 
 const AUTH_ACTIONS = {
     'USN_PASS_LOGIN': 'USN_PASS_LOGIN',
+    'USER_LOGOUT': 'USER_LOGOUT'
 }
 
 
@@ -24,4 +25,23 @@ const authenticate = (request) => {
     }
 }
 
-export { authenticate, AUTH_ACTIONS }
+const logout = () => {
+    return async (dispatch, getState) => {
+        console.log(`login-action:logout()`)
+        try {
+            const response = await logoutUser()
+            console.log(`auth-action:logout() - returned ${JSON.stringify(response)}`)
+            return dispatch({ type: AUTH_ACTIONS.USER_LOGOUT, data: response })
+        } catch (error) {
+            console.log(`auth-actions.logout():: error`)
+            console.error(error)
+            // return Promise.reject(error)
+            /**
+             * TODO
+             * Throw error / dispatch erro and handle
+             */
+        }
+    }
+}
+
+export { authenticate, logout, AUTH_ACTIONS }

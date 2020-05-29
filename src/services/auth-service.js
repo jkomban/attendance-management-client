@@ -5,10 +5,29 @@ console.log(axios)
 const userNamePassAuthenticate = async (request) => {
     let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_DAO_AUTH_SRVC: serviceName } = Config.config
     const serviceURL = `${backendBase}/${basePath}/${serviceName}`
-    console.log(`getSchoolDetails() - ${serviceURL}`)
+    // const serviceURL = `${backendBase}/${basePath}/oauth/signin`
+    console.log(`userNamePassAuthenticate() - ${serviceURL}`)
     let response = {}
     try {
-        response = await axios.post(serviceURL, request)  
+        response = await axios.post(serviceURL, request)
+
+        return response.data;
+
+    } catch (e) {
+        console.error(`ERROR: services.auth.userNamePassAuthenticate() : failed ${JSON.stringify(e)}`)
+        console.log(e);
+        // throw new Error('ERROR in fetching details from students')
+    }
+}
+
+const logoutUser = async () => {
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_DAO_AUTH_SRVC: serviceName } = Config.config
+    // const serviceURL = `${backendBase}/${basePath}/${serviceName}`
+    const serviceURL = `${backendBase}/${basePath}/auth/logout`
+    console.log(`userNamePassAuthenticate() - ${serviceURL}`)
+    let response = {}
+    try {
+        response = await axios.post(serviceURL)
 
         return response.data;
 
@@ -21,4 +40,4 @@ const userNamePassAuthenticate = async (request) => {
 
 
 
-export { userNamePassAuthenticate }
+export { userNamePassAuthenticate, logoutUser }

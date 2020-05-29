@@ -1,4 +1,4 @@
-import { AUTH_ACTIONS } from '../actions/auth-actions'
+import { AUTH_ACTIONS, } from '../actions/auth-actions'
 
 export const initalAuthState = {
 }
@@ -9,6 +9,9 @@ export default (state = initalAuthState, action) => {
             console.log("authReducer.js")
             console.log(action.data)
             return { ...state, ...action.data };
+        case AUTH_ACTIONS.USER_LOGOUT:
+            console.log(`AuthReducer.logout`)
+            return { ...state, ...{} }
         default:
             return state;
     }
