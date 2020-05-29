@@ -29,9 +29,9 @@ const logout = () => {
     return async (dispatch, getState) => {
         console.log(`login-action:logout()`)
         try {
-            const response = await logoutUser()
-            console.log(`auth-action:logout() - returned ${JSON.stringify(response)}`)
-            return dispatch({ type: AUTH_ACTIONS.USER_LOGOUT, data: response })
+            await logoutUser()
+            console.log(`auth-action:logout() -  completed`)
+            return dispatch({ type: AUTH_ACTIONS.USER_LOGOUT, data: {} })
         } catch (error) {
             console.log(`auth-actions.logout():: error`)
             console.error(error)
