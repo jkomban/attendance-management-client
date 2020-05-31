@@ -4,9 +4,8 @@ import MainLayout from '../../layouts/Main';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { useSnackbar } from 'notistack';
-import { getSchoolDetail } from '../../store/actions/school-actions';
 
-const App = ({ schoolData, _getSchoolDetails, notifications }) => {
+const App = ({ schoolData, notifications }) => {
   // values below are true and false to make sure screen dont show error message when it is being loaded
   const [isConfigLoaded, setConfigLoaded] = useState(true)
   const [loadFailed, setLoadFailed] = useState(false)
@@ -27,7 +26,6 @@ const App = ({ schoolData, _getSchoolDetails, notifications }) => {
     const loadComponent = async () => {
       try {
         await ConfigS.setConfiguration();
-        await _getSchoolDetails()
         setConfigLoaded(true)
         setLoadFailed(false)
       } catch (e) {
@@ -71,7 +69,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatachToProps = (dispatch) => {
   return bindActionCreators({
-    _getSchoolDetails: getSchoolDetail
+    // _getSchoolDetails: getSchoolDetail
   }, dispatch)
 }
 

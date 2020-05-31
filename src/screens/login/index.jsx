@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import GoogleLogin from 'react-google-login';
@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { authenticate } from '../../store/actions/auth-actions'
+import { getSchoolDetail } from '../../store/actions/school-actions'
 
 
 function Copyright() {
@@ -52,14 +53,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = ({ _authenticate, auth }) => {
+const Login = ({ _authenticate, auth, _getSchoolDetail }) => {
     const classes = useStyles();
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
     const authenticateUser = () => {
-        console.log(userName)
-        console.log(password)
         _authenticate({ userName, password })
         setPassword('')
     }
@@ -73,11 +72,18 @@ const Login = ({ _authenticate, auth }) => {
         console.log(content)
     }
 
+    useEffect(() => {
+        if (auth.authenticated) {
+            console.log("Authenticated ", auth.authenticated)
+            _getSchoolDetail()
+        }
+    }, [auth])
+
 
     return (
 
         < Container component="main" maxWidth="xs" >
-            {auth.authenticated && <Redirect to="/" />}
+            {auth.authenticated && <Redirect to="/dashboard" />}
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -167,7 +173,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
-        _authenticate: authenticate
+        _authenticate: authenticate,
+        _getSchoolDetail: getSchoolDetail
     }, dispatch)
 }
 
