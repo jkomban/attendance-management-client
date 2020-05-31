@@ -11,6 +11,7 @@ export const schoolReducer = (state = initialSchoolState, action) => {
     // console.log(action.type);
     switch (action.type) {
         case SCHOOL_ACTIONS.RETRIEVE_SCHOOLS:
+            console.log(`INSIDE SCHOOLREDUCER`)
             return { ...state, ...action.data }
         case SCHOOL_ACTIONS.UPDATE_SCHOOLS:
             return state

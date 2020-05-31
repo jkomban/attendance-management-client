@@ -19,7 +19,6 @@ const useStyle = makeStyles(style)
 
 const SideDrawer = ({ auth }) => {
     const classes = useStyle()
-    const isAuthenticated = false;
 
     return (
         <Paper elevation={3} className={classes.root} square >
@@ -68,7 +67,6 @@ const SideDrawer = ({ auth }) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         auth: state.auth
     }

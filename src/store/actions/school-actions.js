@@ -1,4 +1,5 @@
 import { getSchoolDetails, updateSchoolDetails } from '../../services';
+import { NOTIFICATION_ACTIONS } from './noti-actions'
 const SCHOOL_ACTIONS = {
     'RETRIEVE_SCHOOLS': 'RETRIEVE_SCHOOLS',
     'ADD_SCHOOLS': 'ADD_SCHOOLS',
@@ -10,14 +11,13 @@ const SCHOOL_ACTIONS = {
 const getSchoolDetail = () => {
     return async (dispatch) => {
         try {
+
             const data = await getSchoolDetails()
-            // console.log("RESULT OBTAINED : ")
-            // console.log(data)
             dispatch({ type: SCHOOL_ACTIONS.RETRIEVE_SCHOOLS, data: data })
         } catch (e) {
-            console.error(e);
-            console.error("school-actions.getSchoolDetails():: ERROR");
-            // dispatch({ type: SCHOOL_ACTIONS.RETRIEVE_SCHOOLS, schools: data })
+            console.log(e.response);
+            console.log("school-actions.getSchoolDetails():: ERROR");
+            dispatch({ type: NOTIFICATION_ACTIONS.SEND, data: { message: 'Error in fetching school info', content: e.response } })
         }
     }
 }
@@ -32,7 +32,6 @@ const updateSchoolDetail = (data) => {
         } catch (e) {
             console.error(e);
             console.error("school-actions.getSchoolDetails():: ERROR");
-            // dispatch({ type: SCHOOL_ACTIONS.RETRIEVE_SCHOOLS, schools: data })
         }
     }
 }

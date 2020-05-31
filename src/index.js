@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './containers/App/App';
 import { Provider } from 'react-redux';
-// import AppRouter from './routes/Routes'
+import { SnackbarProvider } from 'notistack';
 import AppTheme from './theme/theme';
 import { BrowserRouter } from 'react-router-dom'
 import store from './store/config/storeConfigure';
@@ -14,7 +14,12 @@ ReactDOM.render(
     <Provider store={store}>
         <AppTheme>
             <BrowserRouter basename="/">
-                <App></App>
+                <SnackbarProvider anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}>
+                    <App></App>
+                </SnackbarProvider>
             </BrowserRouter>
         </AppTheme>
     </Provider>

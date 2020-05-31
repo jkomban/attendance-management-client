@@ -3,15 +3,26 @@ import { ConfigS } from '../../services'
 import MainLayout from '../../layouts/Main';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
+import { useSnackbar } from 'notistack';
 import { getSchoolDetail } from '../../store/actions/school-actions';
 
-const App = ({ schoolData, _getSchoolDetails }) => {
+const App = ({ schoolData, _getSchoolDetails, notifications }) => {
   // values below are true and false to make sure screen dont show error message when it is being loaded
   const [isConfigLoaded, setConfigLoaded] = useState(true)
   const [loadFailed, setLoadFailed] = useState(false)
   const [initialLoad, setInitialLoad] = useState(true)
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
   useEffect(() => {
+
+    if (notifications.message != null) {
+      console.log(`App.Notification ${notifications.message}`)
+      const options = {
+        variant: notifications.content.data.type.toLowerCase()
+      }
+      console.log(options)
+      enqueueSnackbar(notifications.message, options)
+    }
 
     const loadComponent = async () => {
       try {
@@ -22,12 +33,14 @@ const App = ({ schoolData, _getSchoolDetails }) => {
       } catch (e) {
         setLoadFailed(false)
       }
+      setInitialLoad(false)
     }
 
     if (initialLoad)
       loadComponent()
 
-  }, [isConfigLoaded, loadFailed])
+
+  }, [isConfigLoaded, loadFailed, notifications])
 
 
   return (
@@ -49,8 +62,10 @@ const App = ({ schoolData, _getSchoolDetails }) => {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state)
   return {
-    schoolData: state.school
+    schoolData: state.school,
+    notifications: state.notifications
   }
 }
 

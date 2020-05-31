@@ -20,7 +20,6 @@ async function getConfiguration() {
         return await axios.get('config.json')
     } else {
         // localhost
-        console.log(config)
         return Promise.resolve({ data: config });
     }
 }

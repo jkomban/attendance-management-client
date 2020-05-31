@@ -1,17 +1,19 @@
 import reduxThunk from 'redux-thunk';
 import immutableStateInvariant from 'redux-immutable-state-invariant';
 import { createStore, applyMiddleware, compose } from 'redux';
-import reducers, { initialStudentsState, initialSchoolState, initialFacilityState, initalAuthState } from '../reducers';
+import reducers, {
+    initialStudentsState, initialSchoolState, initialFacilityState,
+    initalAuthState, initialNotificationState
+} from '../reducers';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
     auth: initalAuthState,
     students: initialStudentsState,
     school: initialSchoolState,
-    facilities: initialFacilityState
+    facilities: initialFacilityState,
+    notifications: initialNotificationState
 }
-
-console.log(initialState)
 
 export function configureStore(initialState) {
     const store = createStore(

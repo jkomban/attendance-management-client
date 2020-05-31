@@ -3,14 +3,16 @@ import authReducer, { initalAuthState } from './authReducer';
 import studentReducer, { initialStudentsState } from './studentsReducer';
 import { schoolReducer, initialSchoolState } from './schoolReducer';
 import { facilityReducer, initialFacilityState } from './facilityReducer';
+import { notiReducer, initialNotificationState } from './notiReducer';
 
-export { initialSchoolState, initialStudentsState, initialFacilityState, initalAuthState };
+export { initialSchoolState, initialStudentsState, initialFacilityState, initalAuthState, initialNotificationState };
 
 const rootReducer = combineReducers({
     auth: authReducer,
     students: studentReducer,
     school: schoolReducer,
-    facilities: facilityReducer
+    facilities: facilityReducer,
+    notifications: notiReducer
 })
 
 

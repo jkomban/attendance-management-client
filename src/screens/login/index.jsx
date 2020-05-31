@@ -61,6 +61,7 @@ const Login = ({ _authenticate, auth }) => {
         console.log(userName)
         console.log(password)
         _authenticate({ userName, password })
+        setPassword('')
     }
 
     const gAuthSuccess = (content) => {
