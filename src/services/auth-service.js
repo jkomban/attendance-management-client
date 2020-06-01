@@ -32,7 +32,7 @@ const logoutUser = async () => {
     } catch (e) {
         console.error(`ERROR: services.auth.logoutUser() : failed ${JSON.stringify(e)}`)
         console.log(e);
-        // throw new Error('ERROR in fetching details from students')
+        throw e;
     }
 }
 
@@ -46,9 +46,9 @@ const signUpUser = async (request) => {
         return response.data;
 
     } catch (e) {
-        console.error(`ERROR: services.auth.signUp() : failed ${JSON.stringify(e)}`)
+        console.log(`ERROR: services.auth.signUp() : failed ${JSON.stringify(e)}`)
         console.log(e);
-        // throw new Error('ERROR in fetching details from students')
+        throw e;
     }
 }
 

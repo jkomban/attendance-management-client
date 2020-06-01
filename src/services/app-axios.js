@@ -15,9 +15,17 @@ instance.interceptors.response.use(response => {
     console.log(response)
     return response;
 }, error => {
-    console.error(`notificationInterceptors():: error`)
-    console.log(error.response)
-    switch (error.response.status) {
+    console.log(`notificationInterceptors():: error`)
+    console.log(error.data)
+    error['data'] = error.respose || { data: {} }
+
+    Object.getOwnPropertyNames(error).forEach(prop => {
+        console.log(`--------`)
+        console.log(prop)
+        console.log(error[prop])
+    })
+    switch (error.response.data.status) {
+        case 400:
         case 401:
             console.log("Please login again")
             error.data.notiType = 'WARNING'
@@ -27,13 +35,13 @@ instance.interceptors.response.use(response => {
             error.data.notiType = 'WARNING'
             break;
         default:
-            console.log(`Application has caused general failure [${error.response.status}]`)
+            console.log(`Application has caused general failure [${error}]`)
             error.data.notiType = 'ERROR'
             break;
     }
+    console.log(error.data)
 
-    console.log(error)
-
+    console.log(`-------`)
     return Promise.reject(error)
 })
 

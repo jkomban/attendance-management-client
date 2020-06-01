@@ -23,7 +23,7 @@ const authenticate = (request) => {
         } catch (e) {
             dispatch({
                 type: NOTIFICATION_ACTIONS.SEND,
-                data: { message: 'Error in sign login', content: e.response }
+                data: { message: 'Error in signin', content: e.data }
             })
         }
     }
@@ -40,7 +40,7 @@ const logout = () => {
             console.log(`auth-actions.logout():: error`)
             dispatch({
                 type: NOTIFICATION_ACTIONS.SEND,
-                data: { message: e.response.data.message || 'Logout Error', content: e.response }
+                data: { message: e.response.data.message || 'Logout Error', content: e.data }
             })
         }
     }
@@ -55,15 +55,15 @@ const signUp = (request) => {
             console.log(response)
             dispatch({
                 type: NOTIFICATION_ACTIONS.SEND,
-                data: { message: response.success, content: { notiType: response.notiType } }
+                data: { message: response.success, content: response }
             })
             return dispatch({ type: AUTH_ACTIONS.USER_SIGNUP, data: response })
         } catch (e) {
             console.log(`auth-actions.signUp():: error`)
-            console.error(e)
+            console.log(e)
             dispatch({
                 type: NOTIFICATION_ACTIONS.SEND,
-                data: { message: 'Error signing up', content: e.response }
+                data: { message: 'Error signing up', content: e.data }
             })
         }
     }
