@@ -17,13 +17,15 @@ instance.interceptors.response.use(response => {
 }, error => {
     console.log(`notificationInterceptors():: error`)
     console.log(error.data)
-    error['data'] = error.respose || { data: {} }
+    error['data'] = error.response || {}
+    if (!error.response)
+        error['response'] = { data: { status: 0 } }
 
-    Object.getOwnPropertyNames(error).forEach(prop => {
-        console.log(`--------`)
-        console.log(prop)
-        console.log(error[prop])
-    })
+    // Object.getOwnPropertyNames(error).forEach(prop => {
+    //     console.log(`--------`)
+    //     console.log(prop)
+    //     console.log(error[prop])
+    // })
     switch (error.response.data.status) {
         case 400:
         case 401:
@@ -35,7 +37,7 @@ instance.interceptors.response.use(response => {
             error.data.notiType = 'WARNING'
             break;
         default:
-            console.log(`Application has caused general failure [${error}]`)
+            console.log(`Application has caused general failure [${error.message}]`)
             error.data.notiType = 'ERROR'
             break;
     }
