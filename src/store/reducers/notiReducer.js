@@ -9,6 +9,7 @@ export const notiReducer = (state = initialNotificationState, action) => {
     switch (action.type) {
         case NOTIFICATION_ACTIONS.SEND:
             console.log(`INSIDE NOTIFICATION REDEUCER`)
+            console.log(action.data);
             return { ...state, ...action.data }
         default:
             console.log(`DEFAULT NOTIFICATION REDEUCER`)

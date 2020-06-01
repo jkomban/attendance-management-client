@@ -14,11 +14,16 @@ const authenticate = (request) => {
         try {
             const response = await userNamePassAuthenticate(request)
             console.log(`auth-action:loginSuccess() - returned ${JSON.stringify(response)}`)
+            dispatch({
+                type: NOTIFICATION_ACTIONS.SEND,
+                data: { message: 'Successfully Authenticated', content: response }
+            })
+
             return dispatch({ type: AUTH_ACTIONS.USN_PASS_LOGIN, data: response })
         } catch (e) {
             dispatch({
                 type: NOTIFICATION_ACTIONS.SEND,
-                data: { message: e.response.data.message || 'Login Error', content: e.response }
+                data: { message: 'Error in sign login', content: e.response }
             })
         }
     }
@@ -47,15 +52,19 @@ const signUp = (request) => {
         try {
             const response = await signUpUser(request)
             console.log(`auth-action:signUp() -  completed`)
+            console.log(response)
+            dispatch({
+                type: NOTIFICATION_ACTIONS.SEND,
+                data: { message: response.success, content: { notiType: response.notiType } }
+            })
             return dispatch({ type: AUTH_ACTIONS.USER_SIGNUP, data: response })
-        } catch (error) {
+        } catch (e) {
             console.log(`auth-actions.signUp():: error`)
-            console.error(error)
-            // return Promise.reject(error)
-            /**
-             * TODO
-             * Throw error / dispatch erro and handle
-             */
+            console.error(e)
+            dispatch({
+                type: NOTIFICATION_ACTIONS.SEND,
+                data: { message: 'Error signing up', content: e.response }
+            })
         }
     }
 }

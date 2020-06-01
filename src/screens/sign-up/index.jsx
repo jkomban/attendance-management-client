@@ -59,10 +59,13 @@ const SignUp = ({ _signUp }) => {
 
     const signUpHandler = () => {
         const requestBody = {
-            userName: email,
-            password: password
+            username: email,
+            password: password,
+            enabled: true,
+
         }
         _signUp(requestBody)
+        setPassword('')
     }
 
     return (

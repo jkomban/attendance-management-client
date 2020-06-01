@@ -17,7 +17,7 @@ const App = ({ schoolData, notifications }) => {
     if (notifications.message != null) {
       console.log(`App.Notification ${notifications.message}`)
       const options = {
-        variant: notifications.content.data.type.toLowerCase()
+        variant: notifications.content.notiType.toLowerCase()
       }
       console.log(options)
       enqueueSnackbar(notifications.message, options)
