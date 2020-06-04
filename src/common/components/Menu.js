@@ -111,6 +111,12 @@ const AppMenu = [
                 text: "Facilities",
                 routePath: "/facilities",
                 needAuth: true
+            },
+            {
+                listIcon: Grain,
+                text: "Batch",
+                routePath: "/batch",
+                needAuth: true
             }
         ],
         appTitle: 'Administration',
