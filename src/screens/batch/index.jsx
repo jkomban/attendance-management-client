@@ -7,7 +7,7 @@ import PageHeader from '../../common/components/PageHeader'
 import Actionbar from '../../common/components/Actionbar-add';
 import CustomToolbar from '../../common/components/CustomToolbar';
 import MUIDatatable from 'mui-datatables';
-import FacilityForm from '../facility/FacilityForm';
+import BatchForm from './Form';
 import { getAllBatchDetails } from '../../store/actions/batch-action'
 
 const styles = () => ({
@@ -36,8 +36,7 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
     const classes = useStyles()
-    const newFacility = { address: { state: {} }, contact: {} }
-    const [selectedFacility, setSelectedFacility] = useState(newFacility)
+    const [selectedBatch, setSelectedBatch] = useState({})
 
     const columns = [
         { name: "id", label: 'ID' },
@@ -58,14 +57,15 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
 
         if (initialLoad)
             getDetails()
-    }, [schoolData, batches])
+    }, [schoolData, batches, initialLoad])
 
     const dummyHandler = () => { }
 
     const addDataHandler = () => {
-        console.log("Add button clicked");
-
-        setAddMode(!setDetailPanel)
+        console.log("Add button clicked " + !isDetailPanelOpen);
+        setSelectedBatch({})
+        setDetailPanel(true)
+        setAddMode(true)
     }
 
     const refreshDataHandler = () => {
@@ -75,26 +75,28 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
     const closeDetailPanel = () => {
         setDetailPanel(false)
     }
-    const openDetailPanelForAdd = () => {
-        // setSelectedFacility(newFacility)
+
+    const rowClickHandler = (rowData, rowMeta) => {
+        console.log("Row Clicked")
+        if (isAddMode)
+            setAddMode(false)
+        setSelectedBatch(batches[rowMeta.dataIndex])
         setDetailPanel(true)
     }
 
     const options = {
         filter: true,
         filterType: 'dropdown',
-        onRowClick: dummyHandler,
+        onRowClick: rowClickHandler,
         onCellClick: dummyHandler,
         onRowsSelect: dummyHandler,
         onRowsDelete: dummyHandler,
-        customToolbar: () => <CustomToolbar addHandler={addDataHandler} />
+        customToolbar: () => <CustomToolbar addHandler={addDataHandler} refreshHandler={refreshDataHandler} />
     }
 
     return (
         <Page>
             <PageHeader title="Batches" >
-                <Actionbar mode={actionMode} changeMode={setActionMode}
-                    saveBtnHndlr={dummyHandler} refreshHndlr={refreshDataHandler} addDataHandler={addDataHandler} />
             </PageHeader>
 
             <div className={classes.container}>
@@ -106,7 +108,7 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
                         options={options}
                     />
                 </div>
-                {isDetailPanelOpen && <FacilityForm isEditMode={isAddMode} facility={dummyHandler}
+                {isDetailPanelOpen && <BatchForm isEditMode={isAddMode} batch={selectedBatch}
                     panelCloseHandler={closeDetailPanel} />}
             </div>
 

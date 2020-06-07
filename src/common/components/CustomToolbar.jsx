@@ -11,7 +11,7 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 // const useStyles = makeStyles(styles)
 
 
-const CustomToolbar = ({ addHandler }) => {
+const CustomToolbar = ({ addHandler, refreshHandler = () => { } }) => {
     // const classes = useStyles()
     console.log(`Inside CustomToolbar`)
 
@@ -24,7 +24,7 @@ const CustomToolbar = ({ addHandler }) => {
                 </IconButton>
             </Tooltip>
             <Tooltip title={"Refresh Table"}>
-                <IconButton onClick={() => { }}>
+                <IconButton onClick={refreshHandler}>
                     <RefreshIcon />
                 </IconButton>
             </Tooltip>
