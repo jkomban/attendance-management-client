@@ -2,7 +2,7 @@ import axios from 'axios';
 const instance = axios.create({ withCredentials: true });
 
 instance.interceptors.response.use(response => {
-    console.log(response)
+    // console.log(response)
     console.log(`notificationInterceptors():: succcess`)
     switch (response.status) {
         case 200:
@@ -12,11 +12,11 @@ instance.interceptors.response.use(response => {
             response.data.notiType = 'DEFAULT'
             break;
     }
-    console.log(response)
+    // console.log(response)
     return response;
 }, error => {
     console.log(`notificationInterceptors():: error`)
-    console.log(error.data)
+    // console.log(error.data)
     error['data'] = error.response || {}
     if (!error.response)
         error['response'] = { data: { status: 0 } }
@@ -41,9 +41,7 @@ instance.interceptors.response.use(response => {
             error.data.notiType = 'ERROR'
             break;
     }
-    console.log(error.data)
-
-    console.log(`-------`)
+    // console.log(error.data)
     return Promise.reject(error)
 })
 

@@ -9,7 +9,7 @@ let config = devConfig
 
 function isLocalHost(hostname) {
     // return hostname.indexOf("localhost") > -1 
-    console.log(`isLocalHost() - returns ${process.env.NODE_ENV}`)
+    // console.log(`isLocalHost() - returns ${process.env.NODE_ENV}`)
     return (process.env.NODE_ENV === 'development')
 }
 

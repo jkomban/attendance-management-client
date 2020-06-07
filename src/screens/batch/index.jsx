@@ -41,8 +41,8 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
 
     const columns = [
         { name: "id", label: 'ID' },
-        { name: "code", label: 'code' },
-        { name: "fullName", label: 'Full Name' },
+        { name: "name", label: 'code' },
+        { name: "description", label: 'Full Name' },
         { name: "startDate", label: 'Start Date' },
         { name: "endDate", label: 'End Date' }
     ]
@@ -116,8 +116,6 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log("************ INSIDE BATCH ")
-    console.log(state)
     return {
         schoolData: state.school,
         batches: state.batches

@@ -10,7 +10,7 @@ const App = ({ schoolData, notifications }) => {
   const [isConfigLoaded, setConfigLoaded] = useState(true)
   const [loadFailed, setLoadFailed] = useState(false)
   const [initialLoad, setInitialLoad] = useState(true)
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
 
@@ -19,7 +19,6 @@ const App = ({ schoolData, notifications }) => {
       const options = {
         variant: notifications.content.notiType.toLowerCase()
       }
-      console.log(options)
       enqueueSnackbar(notifications.message, options)
     }
 
@@ -60,7 +59,6 @@ const App = ({ schoolData, notifications }) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     schoolData: state.school,
     notifications: state.notifications

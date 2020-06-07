@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux';
 
 
 const PrivateRoute = ({ auth, component: Component, ...rest }) => {
-    console.log(rest)
-    console.log(auth)
+    // console.log(rest)
+    // console.log(auth)
 
     if (rest.location.pathname.indexOf("dashboard") > -1) {
         console.log("It happened")
@@ -37,7 +37,7 @@ const PrivateRoute = ({ auth, component: Component, ...rest }) => {
 };
 
 const mapStateToProps = (state) => {
-    console.log(state)
+    // console.log(state)
     return {
         auth: state.auth
     }

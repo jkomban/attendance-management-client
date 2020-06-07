@@ -13,7 +13,7 @@ const authenticate = (request) => {
         console.log(`login-action:authenticate()`)
         try {
             const response = await userNamePassAuthenticate(request)
-            console.log(`auth-action:loginSuccess() - returned ${JSON.stringify(response)}`)
+            console.log(`auth-action:loginSuccess() - returned `)
             dispatch({
                 type: NOTIFICATION_ACTIONS.SEND,
                 data: { message: 'Successfully Authenticated', content: response }
