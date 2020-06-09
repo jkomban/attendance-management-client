@@ -92,7 +92,7 @@ const Address = ({ isEditMode = false, address = { state: {} }, addressHandler, 
                 isEditMode && (
                     <Paper className={classes.container} elevation={3} disabled={!isEditMode} >
 
-                        <Typography className={classes.containerLabel}>Address : {String(isEditMode)} </Typography>
+                        <Typography className={classes.containerLabel}>Address </Typography>
                         <TextField
                             id="address-line-1-id"
                             name="addressLine1"

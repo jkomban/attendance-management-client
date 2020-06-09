@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core';
 import { Paper, TextField, Button, Typography } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns'
-import { MuiPickersUtilsProvider, InlineDatePicker } from 'material-ui-pickers'
+import { MuiPickersUtilsProvider, InlineDatePicker } from '@material-ui/pickers'
 import Address from '../../common/components/Address'
 import Name from '../../common/components/Name'
 import Gender from '../../common/components/Gender'

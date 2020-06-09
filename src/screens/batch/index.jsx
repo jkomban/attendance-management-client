@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core'
 import Page from '../../common/components/Page';
 import PageHeader from '../../common/components/PageHeader'
-import Actionbar from '../../common/components/Actionbar-add';
 import CustomToolbar from '../../common/components/CustomToolbar';
 import MUIDatatable from 'mui-datatables';
 import BatchForm from './Form';
@@ -32,7 +31,7 @@ const useStyles = makeStyles(styles)
 
 const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
     const [actionMode, setActionMode] = useState(false)
-    const [isAddMode, setAddMode] = useState(false)
+    const [isEditMode, setEditMode] = useState(false)
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
     const classes = useStyles()
@@ -61,11 +60,25 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
 
     const dummyHandler = () => { }
 
+    const batchChangeHandler = (e) => {
+        console.log(e)
+        const temp = { ...selectedBatch }
+        temp[e.target.name] = e.target.value
+        console.log(temp)
+        setSelectedBatch(temp)
+    }
+
     const addDataHandler = () => {
         console.log("Add button clicked " + !isDetailPanelOpen);
         setSelectedBatch({})
         setDetailPanel(true)
-        setAddMode(true)
+        setEditMode(true)
+    }
+
+    const saveHandler = () => {
+        console.log(`Save handler`)
+        console.log(selectedBatch)
+        setEditMode(false)
     }
 
     const refreshDataHandler = () => {
@@ -78,8 +91,8 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
 
     const rowClickHandler = (rowData, rowMeta) => {
         console.log("Row Clicked")
-        if (isAddMode)
-            setAddMode(false)
+        if (isEditMode)
+            setEditMode(false)
         setSelectedBatch(batches[rowMeta.dataIndex])
         setDetailPanel(true)
     }
@@ -108,10 +121,13 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
                         options={options}
                     />
                 </div>
-                {isDetailPanelOpen && <BatchForm isEditMode={isAddMode} batch={selectedBatch}
+                {isDetailPanelOpen && <BatchForm isEditMode={isEditMode}
+                    batch={selectedBatch}
+                    toggleMode={setEditMode}
+                    dataChangeHandler={batchChangeHandler}
+                    saveHandler={saveHandler}
                     panelCloseHandler={closeDetailPanel} />}
             </div>
-
         </Page>
     )
 
