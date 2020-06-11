@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles, Box, Paper, TextField, Typography, Button, Tooltip, IconButton } from '@material-ui/core'
-import DateFnsUtils from '@date-io/date-fns';
+// import DateFnsUtils from '@date-io/date-fns';
+import MomentUtils from '@date-io/moment';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import { Edit, ArrowForwardIos as ChevronRightIcon, Save } from '@material-ui/icons'
 import { useEffect } from 'react';
@@ -44,6 +45,17 @@ const Form = ({ isEditMode, batch, panelCloseHandler,
         const event = {
             target: {
                 name: 'endDate',
+                value: f
+            }
+        };
+        dataChangeHandler(event)
+    }
+
+    const startDateChangeHandler = (e, f, g) => {
+        console.log(f)
+        const event = {
+            target: {
+                name: 'startDate',
                 value: f
             }
         };
@@ -102,23 +114,24 @@ const Form = ({ isEditMode, batch, panelCloseHandler,
                     onChange={dataChangeHandler}
                     disabled={!isEditMode}
                 />
-                <TextField
-                    id="start-date-id"
-                    name="startDate"
-                    label="Start Date"
-                    margin="normal"
-                    type="date"
-                    value={batch.startDate || ''}
-                    onChange={dataChangeHandler}
-                    disabled={!isEditMode}
-                />
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <KeyboardDatePicker
+                        name="startDate"
+                        label="Start Date"
+                        format="yyyy-MM-DD"
+                        value={batch.startDate || ''}
+                        onChange={startDateChangeHandler}
+                        disabled={!isEditMode}
+                    />
+                </MuiPickersUtilsProvider>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
                     <KeyboardDatePicker
                         name="endDate"
                         label="End Date"
-                        format="yyyy-MM-dd"
+                        format="yyyy-MM-DD"
                         value={batch.endDate || ''}
                         onChange={endDateChangeHandler}
+                        disabled={!isEditMode}
                     />
                 </MuiPickersUtilsProvider>
             </div>

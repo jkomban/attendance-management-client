@@ -7,7 +7,7 @@ import PageHeader from '../../common/components/PageHeader'
 import CustomToolbar from '../../common/components/CustomToolbar';
 import MUIDatatable from 'mui-datatables';
 import BatchForm from './Form';
-import { getAllBatchDetails } from '../../store/actions/batch-action'
+import { getAllBatchDetails, updateBatch, addBatch } from '../../store/actions/batch-action'
 
 const styles = () => ({
     root: {
@@ -29,7 +29,7 @@ const styles = () => ({
 })
 const useStyles = makeStyles(styles)
 
-const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
+const Batch = ({ _getAllBatchDetails, _updateBatch, batches, schoolData }) => {
     const [actionMode, setActionMode] = useState(false)
     const [isEditMode, setEditMode] = useState(false)
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
@@ -75,9 +75,11 @@ const Batch = ({ _getAllBatchDetails, batches, schoolData }) => {
         setEditMode(true)
     }
 
-    const saveHandler = () => {
+    const saveHandler = async () => {
         console.log(`Save handler`)
         console.log(selectedBatch)
+        await _updateBatch(selectedBatch, schoolData.id)
+        await _getAllBatchDetails(schoolData.id)
         setEditMode(false)
     }
 
@@ -142,7 +144,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
-        _getAllBatchDetails: getAllBatchDetails
+        _getAllBatchDetails: getAllBatchDetails,
+        _updateBatch: updateBatch
     }, dispatch)
 }
 

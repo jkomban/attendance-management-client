@@ -4,6 +4,7 @@ const instance = axios.create({ withCredentials: true });
 instance.interceptors.response.use(response => {
     // console.log(response)
     console.log(`notificationInterceptors():: succcess`)
+    response['data'] = response.data || {}
     switch (response.status) {
         case 200:
             response.data.notiType = 'INFO'
