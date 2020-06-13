@@ -5,5 +5,6 @@
     "REACT_APP_SCHOOL_SRVC": "school",
     "REACT_APP_FACILITY_SRVC": "facility",
     "REACT_APP_DAO_AUTH_SRVC": "auth",
-    "REACT_APP_BATCH_SRVC": "batch"
+    "REACT_APP_BATCH_SRVC": "batch",
+    "REACT_APP_GRADE_SRVC": "grades"
 }

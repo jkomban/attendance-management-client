@@ -29,20 +29,19 @@ const styles = () => ({
 })
 const useStyles = makeStyles(styles)
 
-const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, batches, schoolData }) => {
+const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, grades, schoolData }) => {
     const [actionMode, setActionMode] = useState(false)
     const [isEditMode, setEditMode] = useState(false)
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
     const classes = useStyles()
-    const [selectedBatch, setSelectedBatch] = useState({})
+    const [selectedGrade, setSelectedGrade] = useState({})
 
     const columns = [
         { name: "id", label: 'ID' },
         { name: "name", label: 'code' },
-        { name: "description", label: 'Full Name' },
-        { name: "startDate", label: 'Start Date' },
-        { name: "endDate", label: 'End Date' }
+        { name: "level", label: 'Full Name' },
+        { name: "description", label: 'Description' },
     ]
 
     useEffect(() => {
@@ -56,32 +55,32 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, batches, schoolDa
 
         if (initialLoad)
             getDetails()
-    }, [schoolData, batches, initialLoad])
+    }, [schoolData, grades, initialLoad])
 
     const dummyHandler = () => { }
 
     const batchChangeHandler = (e) => {
         console.log(e)
-        const temp = { ...selectedBatch }
+        const temp = { ...selectedGrade }
         temp[e.target.name] = e.target.value
         console.log(temp)
-        setSelectedBatch(temp)
+        setSelectedGrade(temp)
     }
 
     const addDataHandler = () => {
         console.log("Add button clicked " + !isDetailPanelOpen);
-        setSelectedBatch({})
+        setSelectedGrade({})
         setDetailPanel(true)
         setEditMode(true)
     }
 
     const saveHandler = async () => {
         console.log(`Save handler`)
-        console.log(selectedBatch)
-        if (selectedBatch.id)
-            await _updateBatch(selectedBatch, schoolData.id)
+        console.log(setSelectedGrade)
+        if (setSelectedGrade.id)
+            await _updateBatch(setSelectedGrade, schoolData.id)
         else
-            await _addBatch(selectedBatch, schoolData.id)
+            await _addBatch(setSelectedGrade, schoolData.id)
         await _getAllBatchDetails(schoolData.id)
         setEditMode(false)
     }
@@ -98,7 +97,7 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, batches, schoolDa
         console.log("Row Clicked")
         if (isEditMode)
             setEditMode(false)
-        setSelectedBatch(batches[rowMeta.dataIndex])
+        setSelectedGrade(grades[rowMeta.dataIndex])
         setDetailPanel(true)
     }
 
@@ -122,12 +121,12 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, batches, schoolDa
                     <MUIDatatable
                         title={'Batch List'}
                         columns={columns}
-                        data={batches}
+                        data={grades}
                         options={options}
                     />
                 </div>
                 {isDetailPanelOpen && <BatchForm isEditMode={isEditMode}
-                    batch={selectedBatch}
+                    batch={setSelectedGrade}
                     toggleMode={setEditMode}
                     dataChangeHandler={batchChangeHandler}
                     saveHandler={saveHandler}
@@ -141,7 +140,7 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, batches, schoolDa
 const mapStateToProps = (state) => {
     return {
         schoolData: state.school,
-        batches: state.batches
+        grades: state.grades
     }
 }
 
