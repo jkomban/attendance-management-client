@@ -26,10 +26,7 @@ async function getConfiguration() {
 
 async function setConfiguration() {
     let response = await getConfiguration()
-    console.log(`Config set ${JSON.stringify(config)}`)
-    console.log(`DevConfig set ${JSON.stringify(devConfig)}`)
     config = response.data
-    console.log(`Config set ${JSON.stringify(config)}`)
 }
 
 function getConfig(){

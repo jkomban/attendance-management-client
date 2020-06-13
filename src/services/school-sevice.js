@@ -2,7 +2,7 @@ import axios from './app-axios';
 import Config from './config'
 
 const getSchoolDetails = async () => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_SCHOOL_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_SCHOOL_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}`
     let response = {}
     try {
@@ -17,7 +17,7 @@ const getSchoolDetails = async () => {
 }
 
 const updateSchoolDetails = async (content) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_SCHOOL_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_SCHOOL_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}`
     console.log(`updateSchoolDetails() - ${serviceURL}`)
     let response = {}

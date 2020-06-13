@@ -2,7 +2,7 @@ import axios from './app-axios';
 import Config from './config'
 
 const getAllBatches = async (schoolID) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_BATCH_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_BATCH_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}/all/${schoolID}`
     console.log(`getAllBatches() - ${serviceURL}`)
     let response = {}
@@ -17,7 +17,7 @@ const getAllBatches = async (schoolID) => {
 }
 
 const addBatch = async (batchDetails, schoolID) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_BATCH_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_BATCH_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}/${schoolID}`
     console.log(`addBatch() - ${serviceURL}`)
     let response = {}
@@ -32,7 +32,7 @@ const addBatch = async (batchDetails, schoolID) => {
 }
 
 const updateBatch = async (batchDetails, schoolID) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_BATCH_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_BATCH_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}/${schoolID}`
     console.log(`updateBatch() - ${serviceURL}`)
     let response = {}

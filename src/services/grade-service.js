@@ -2,7 +2,7 @@ import axios from './app-axios';
 import Config from './config'
 
 const getAllGrades = async (schoolID) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_GRADE_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_GRADE_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}`
     console.log(`getAllGrades() - ${serviceURL}`)
     let response = {}
@@ -17,7 +17,7 @@ const getAllGrades = async (schoolID) => {
 }
 
 const addGrade = async (gradeDetails) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_GRADE_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_GRADE_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}`
     console.log(`addGrade() - ${serviceURL}`)
     let response = {}
@@ -32,7 +32,7 @@ const addGrade = async (gradeDetails) => {
 }
 
 const updateGrade = async (gradeDetails) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_GRADE_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_GRADE_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}`
     console.log(`updateGrade() - ${serviceURL}`)
     let response = {}

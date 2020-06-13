@@ -3,10 +3,9 @@ import Config from './config'
 
 const getAllStudentDetails = async ({ pageSize = 10, index = 0 }) => {
 
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}`
     console.log(`getAllStudentDetails() - ${serviceURL}`)
-    console.log(Config.config)
     let response = {}
     try {
         response = await axios.get(serviceURL)
@@ -22,7 +21,7 @@ const getAllStudentDetails = async ({ pageSize = 10, index = 0 }) => {
 
 const deleteStudentDetails = async (Student) => {
     console.log(Student)
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}/${Student.studentId}`
     const getURL = `${backendBase}/${basePath}/${serviceName}`
 
@@ -45,7 +44,7 @@ const deleteStudentDetails = async (Student) => {
 }
 
 const updateStudentDetails = async (Student) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: serviceName } = Config.config
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_STUDENT_SRVC: serviceName } = Config.getConfig()
     let serviceURL;
     let option = "ADD";
 
