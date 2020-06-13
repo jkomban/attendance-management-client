@@ -1,8 +1,5 @@
 import React from 'react'
-import { makeStyles, Box, Paper, TextField, Typography, Button, Tooltip, IconButton } from '@material-ui/core'
-// import DateFnsUtils from '@date-io/date-fns';
-import MomentUtils from '@date-io/moment';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import { makeStyles, Paper, TextField, Tooltip, IconButton } from '@material-ui/core'
 import { Edit, ArrowForwardIos as ChevronRightIcon, Save } from '@material-ui/icons'
 import { useEffect } from 'react';
 
@@ -34,47 +31,27 @@ const styles = theme => {
 const useStyles = makeStyles(styles)
 
 
-const Form = ({ isEditMode, batch, panelCloseHandler,
+const Form = ({ isEditMode, grade, panelCloseHandler,
     dataChangeHandler, toggleMode, saveHandler }) => {
     const classes = useStyles()
-    console.log("Batch Form")
-    console.log(batch);
+    console.log("Grade Form")
+    console.log(grade);
 
-    const endDateChangeHandler = (e, f, g) => {
-        console.log(f)
-        const event = {
-            target: {
-                name: 'endDate',
-                value: f
-            }
-        };
-        dataChangeHandler(event)
-    }
 
-    const startDateChangeHandler = (e, f, g) => {
-        console.log(f)
-        const event = {
-            target: {
-                name: 'startDate',
-                value: f
-            }
-        };
-        dataChangeHandler(event)
-    }
 
     useEffect(() => {
         console.log(`UseEffect triggered....`)
-    }, [batch])
+    }, [grade])
 
     return (
         <Paper className={classes.root} elevation={5} variant="elevation" >
             <div className={classes.header}>
                 <TextField
-                    id="batch-name-id"
+                    id="grade-name-id"
                     name="name"
-                    label="Batch Name"
+                    label="Grade Name"
                     margin="normal"
-                    value={batch.name || ''}
+                    value={grade.name || ''}
                     onChange={dataChangeHandler}
                     disabled={!isEditMode} />
                 <div>
@@ -106,34 +83,23 @@ const Form = ({ isEditMode, batch, panelCloseHandler,
 
             <div className={classes.controlContainer}>
                 <TextField
+                    id="level-id"
+                    name="level"
+                    label="Level"
+                    margin="normal"
+                    value={grade.level || ''}
+                    onChange={dataChangeHandler}
+                    disabled={!isEditMode}
+                />
+                <TextField
                     id="description-id"
                     name="description"
                     label="Description"
                     margin="normal"
-                    value={batch.description || ''}
+                    value={grade.description || ''}
                     onChange={dataChangeHandler}
                     disabled={!isEditMode}
                 />
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <KeyboardDatePicker
-                        name="startDate"
-                        label="Start Date"
-                        format="yyyy-MM-DD"
-                        value={batch.startDate || '2020-01-01'}
-                        onChange={startDateChangeHandler}
-                        disabled={!isEditMode}
-                    />
-                </MuiPickersUtilsProvider>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <KeyboardDatePicker
-                        name="endDate"
-                        label="End Date"
-                        format="yyyy-MM-DD"
-                        value={batch.endDate || '2020-01-01'}
-                        onChange={endDateChangeHandler}
-                        disabled={!isEditMode}
-                    />
-                </MuiPickersUtilsProvider>
             </div>
 
         </Paper>

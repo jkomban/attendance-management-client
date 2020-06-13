@@ -6,8 +6,8 @@ import Page from '../../common/components/Page';
 import PageHeader from '../../common/components/PageHeader'
 import CustomToolbar from '../../common/components/CustomToolbar';
 import MUIDatatable from 'mui-datatables';
-import BatchForm from './Form';
-import { getAllBatchDetails, updateBatch, addBatch } from '../../store/actions/batch-action'
+import GradeForm from './Form';
+import { getAllGradeDetails, addGrade, updateGrade } from '../../store/actions/grade-action'
 
 const styles = () => ({
     root: {
@@ -29,8 +29,7 @@ const styles = () => ({
 })
 const useStyles = makeStyles(styles)
 
-const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, grades, schoolData }) => {
-    const [actionMode, setActionMode] = useState(false)
+const Grade = ({ _getAllGradeDetails, _updateGrade, _addGrade, grades, schoolData }) => {
     const [isEditMode, setEditMode] = useState(false)
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
@@ -40,7 +39,7 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, grades, schoolDat
     const columns = [
         { name: "id", label: 'ID' },
         { name: "name", label: 'code' },
-        { name: "level", label: 'Full Name' },
+        { name: "level", label: 'Level' },
         { name: "description", label: 'Description' },
     ]
 
@@ -50,7 +49,7 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, grades, schoolDat
             setInitialLoad(false)
             console.log(`Initial Load about to Happen`)
             console.log(schoolData)
-            await _getAllBatchDetails(schoolData.id)
+            await _getAllGradeDetails(schoolData.id)
         }
 
         if (initialLoad)
@@ -59,7 +58,7 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, grades, schoolDat
 
     const dummyHandler = () => { }
 
-    const batchChangeHandler = (e) => {
+    const dataChangeHandler = (e) => {
         console.log(e)
         const temp = { ...selectedGrade }
         temp[e.target.name] = e.target.value
@@ -76,12 +75,12 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, grades, schoolDat
 
     const saveHandler = async () => {
         console.log(`Save handler`)
-        console.log(setSelectedGrade)
-        if (setSelectedGrade.id)
-            await _updateBatch(setSelectedGrade, schoolData.id)
+        console.log(selectedGrade)
+        if (selectedGrade.id)
+            await _updateGrade(selectedGrade, schoolData.id)
         else
-            await _addBatch(setSelectedGrade, schoolData.id)
-        await _getAllBatchDetails(schoolData.id)
+            await _addGrade(selectedGrade, schoolData.id)
+        await _getAllGradeDetails(schoolData.id)
         setEditMode(false)
     }
 
@@ -113,22 +112,22 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, grades, schoolDat
 
     return (
         <Page>
-            <PageHeader title="Batches" >
+            <PageHeader title="Grades" >
             </PageHeader>
 
             <div className={classes.container}>
                 <div className={classes.muiContainer}>
                     <MUIDatatable
-                        title={'Batch List'}
+                        title={'Grade List'}
                         columns={columns}
                         data={grades}
                         options={options}
                     />
                 </div>
-                {isDetailPanelOpen && <BatchForm isEditMode={isEditMode}
-                    batch={setSelectedGrade}
+                {isDetailPanelOpen && <GradeForm isEditMode={isEditMode}
+                    grade={selectedGrade}
                     toggleMode={setEditMode}
-                    dataChangeHandler={batchChangeHandler}
+                    dataChangeHandler={dataChangeHandler}
                     saveHandler={saveHandler}
                     panelCloseHandler={closeDetailPanel} />}
             </div>
@@ -138,6 +137,8 @@ const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, grades, schoolDat
 }
 
 const mapStateToProps = (state) => {
+    console.log(state)
+
     return {
         schoolData: state.school,
         grades: state.grades
@@ -146,9 +147,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
-        _getAllBatchDetails: getAllBatchDetails,
-        _updateBatch: updateBatch,
-        _addBatch: addBatch
+        _getAllGradeDetails: getAllGradeDetails,
+        _updateGrade: updateGrade,
+        _addGrade: addGrade
     }, dispatch)
 }
 
