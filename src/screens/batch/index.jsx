@@ -29,7 +29,7 @@ const styles = () => ({
 })
 const useStyles = makeStyles(styles)
 
-const Batch = ({ _getAllBatchDetails, _updateBatch, batches, schoolData }) => {
+const Batch = ({ _getAllBatchDetails, _updateBatch, _addBatch, batches, schoolData }) => {
     const [actionMode, setActionMode] = useState(false)
     const [isEditMode, setEditMode] = useState(false)
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
@@ -78,7 +78,10 @@ const Batch = ({ _getAllBatchDetails, _updateBatch, batches, schoolData }) => {
     const saveHandler = async () => {
         console.log(`Save handler`)
         console.log(selectedBatch)
-        await _updateBatch(selectedBatch, schoolData.id)
+        if (selectedBatch.id)
+            await _updateBatch(selectedBatch, schoolData.id)
+        else
+            await _addBatch(selectedBatch, schoolData.id)
         await _getAllBatchDetails(schoolData.id)
         setEditMode(false)
     }
@@ -145,7 +148,8 @@ const mapStateToProps = (state) => {
 const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
         _getAllBatchDetails: getAllBatchDetails,
-        _updateBatch: updateBatch
+        _updateBatch: updateBatch,
+        _addBatch: addBatch
     }, dispatch)
 }
 

@@ -119,7 +119,7 @@ const Form = ({ isEditMode, batch, panelCloseHandler,
                         name="startDate"
                         label="Start Date"
                         format="yyyy-MM-DD"
-                        value={batch.startDate || ''}
+                        value={batch.startDate || '2020-01-01'}
                         onChange={startDateChangeHandler}
                         disabled={!isEditMode}
                     />
@@ -129,7 +129,7 @@ const Form = ({ isEditMode, batch, panelCloseHandler,
                         name="endDate"
                         label="End Date"
                         format="yyyy-MM-DD"
-                        value={batch.endDate || ''}
+                        value={batch.endDate || '2020-01-01'}
                         onChange={endDateChangeHandler}
                         disabled={!isEditMode}
                     />
