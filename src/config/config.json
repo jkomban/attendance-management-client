@@ -1,5 +1,5 @@
 {
-    "REACT_APP_BACKEND": "http: //localhost:8080",
+    "REACT_APP_BACKEND": "https://school-management-systems.herokuapp.com",
     "REACT_APP_NAME_BASE": "sms",
     "REACT_APP_STUDENT_SRVC": "student",
     "REACT_APP_SCHOOL_SRVC": "school",
