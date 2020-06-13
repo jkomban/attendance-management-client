@@ -5,10 +5,11 @@ import { schoolReducer, initialSchoolState } from './schoolReducer';
 import { facilityReducer, initialFacilityState } from './facilityReducer';
 import { notiReducer, initialNotificationState } from './notiReducer';
 import { batchReducer, initialBatchState } from './batchReducer';
+import { gradeReducer, initialGradeState } from './gradeReducer';
 
 export {
     initialSchoolState, initialStudentsState, initialFacilityState, initalAuthState, initialNotificationState,
-    initialBatchState
+    initialBatchState, initialGradeState
 };
 
 const rootReducer = combineReducers({
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     school: schoolReducer,
     facilities: facilityReducer,
     notifications: notiReducer,
-    batches: batchReducer
+    batches: batchReducer,
+    grades: gradeReducer
 })
 
 
