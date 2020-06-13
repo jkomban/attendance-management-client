@@ -9,7 +9,7 @@ let config = devConfig
 
 function isLocalHost(hostname) {
     // return hostname.indexOf("localhost") > -1 
-    // console.log(`isLocalHost() - returns ${process.env.NODE_ENV}`)
+    console.log(`isLocalHost() - returns ${process.env.NODE_ENV} : ${(process.env.NODE_ENV === 'development')}`)
     return (process.env.NODE_ENV === 'development')
 }
 
@@ -26,7 +26,10 @@ async function getConfiguration() {
 
 async function setConfiguration() {
     let response = await getConfiguration()
+    console.log(`Config set ${JSON.stringify(config)}`)
+    console.log(`DevConfig set ${JSON.stringify(devConfig)}`)
     config = response.data
+    console.log(`Config set ${JSON.stringify(config)}`)
 }
 
 export default { setConfiguration, config }
