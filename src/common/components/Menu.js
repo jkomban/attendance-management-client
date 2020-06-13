@@ -1,7 +1,7 @@
 import {
     Dashboard, Assignment, Person, School, Grain,
     ExitToApp, SupervisedUserCircle, BarChart, AccountBalance,
-    Business, AddCircle, ViewList, LockOutlined
+    Business, AddCircle, ViewList, LockOutlined, AccountTree
 } from '@material-ui/icons'
 
 const AppMenu = [
@@ -116,6 +116,12 @@ const AppMenu = [
                 listIcon: Grain,
                 text: "Batch",
                 routePath: "/batch",
+                needAuth: true
+            },
+            {
+                listIcon: AccountTree,
+                text: "Grade",
+                routePath: "/grade",
                 needAuth: true
             }
         ],

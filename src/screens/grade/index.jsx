@@ -29,7 +29,8 @@ const styles = () => ({
 })
 const useStyles = makeStyles(styles)
 
-const Batch = ({ _getAllBatchDetails, _updateBatch, _addBatch, batches, schoolData }) => {
+const Grade = ({ _getAllBatchDetails, _updateBatch, _addBatch, batches, schoolData }) => {
+    const [actionMode, setActionMode] = useState(false)
     const [isEditMode, setEditMode] = useState(false)
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
@@ -153,4 +154,4 @@ const mapDispatachToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatachToProps)(Batch);
+export default connect(mapStateToProps, mapDispatachToProps)(Grade);

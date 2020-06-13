@@ -10,6 +10,7 @@ import LoginScreen from '../screens/login';
 import SignUpScreen from '../screens/sign-up';
 import LogoutScreen from '../common/components/Logout';
 import BatchScreen from '../screens/batch';
+import GradeScreen from '../screens/grade';
 
 const Routes = props => {
     // console.log(props)
@@ -21,6 +22,7 @@ const Routes = props => {
             <PrivateRoute exact path="/school" component={SchoolScreen}></PrivateRoute>
             <PrivateRoute exact path="/facilities" component={FacilityScreen}></PrivateRoute>
             <PrivateRoute exact path="/batch" component={BatchScreen}></PrivateRoute>
+            <PrivateRoute exact path="/grade" component={GradeScreen}></PrivateRoute>
             <Route exact path="/signin" component={LoginScreen} />
             <Route exact path="/signup" component={SignUpScreen} />
             <PrivateRoute exact path="/logout" component={LogoutScreen} />
