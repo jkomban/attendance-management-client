@@ -2,7 +2,9 @@ import axios from './app-axios';
 import Config from './config'
 
 const userNamePassAuthenticate = async (request) => {
-    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_DAO_AUTH_SRVC: serviceName } = Config.config
+    console.log(Config.getConfig())
+    console.log(Config.config)
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_DAO_AUTH_SRVC: serviceName } = Config.getConfig()
     const serviceURL = `${backendBase}/${basePath}/${serviceName}/signin`
     // const serviceURL = `${backendBase}/${basePath}/oauth/signin`
     console.log(`userNamePassAuthenticate() - ${serviceURL}`)

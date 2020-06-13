@@ -32,5 +32,9 @@ async function setConfiguration() {
     console.log(`Config set ${JSON.stringify(config)}`)
 }
 
-export default { setConfiguration, config }
+function getConfig(){
+    return config;
+}
+
+export default { setConfiguration, config, getConfig }
 
