@@ -11,8 +11,8 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
-        padding: '16px 16px',
-        margin: '10px 10px',
+        // padding: '16px 16px',
+        // margin: '10px 10px',
         minWidth: '30%',
     },
     containerLabel: {

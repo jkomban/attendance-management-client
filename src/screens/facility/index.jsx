@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core'
 import PageHeader from '../../common/components/PageHeader'
-import Actionbar from '../../common/components/Actionbar-add';
 import CustomToolbar from '../../common/components/CustomToolbar';
 import Page from '../../common/components/Page';
 import MUIDatatable from 'mui-datatables';
@@ -32,11 +31,9 @@ const styles = () => ({
 const useStyles = makeStyles(styles)
 
 const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
-    const [actionMode, setActionMode] = useState(false)
-    const [isAddMode, setAddMode] = useState(false)
+    const [isEditMode, setEditMode] = useState(false)
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
-    const [transformedData, setTransformedData] = useState([])
     const newFacility = { address: { state: {} }, contact: {} }
     const [selectedFacility, setSelectedFacility] = useState(newFacility)
     const classes = useStyles()
@@ -55,25 +52,41 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
     console.log(schoolData)
 
 
-    const saveSchoolChangesToDB = async () => {
-        console.log("Changes saved to DB");
-        setActionMode(false)
-    }
-
-    const addDataHandler = () => {
-        console.log("Add button clicked");
-
-        setAddMode(!setDetailPanel)
+    const saveHandler = () => {
+        console.log("Save button clicked");
+        setEditMode(false)
     }
 
     const refreshDataHandler = () => {
         setInitialLoad(true)
     }
 
+    const addressChangeHandler = (e) => {
+        console.log(e)
+        const temp = { ...selectedFacility }
+        if (e.target.name == "state") {
+            temp.address.state = temp.address.state || {}
+            temp.address.state.code = e.target.value
+        } else {
+            temp.address[e.target.name] = e.target.value
+        }
+
+        console.log(temp)
+        console.log(temp === selectedFacility)
+        setSelectedFacility(temp)
+    }
+
+    const dataChangeHandler = (e) => {
+        console.log(e)
+        const temp = { ...selectedFacility }
+        temp[e.target.name] = e.target.value
+        setSelectedFacility(temp)
+    }
+
     const closeDetailPanel = () => {
         setDetailPanel(false)
     }
-    const openDetailPanelForAdd= ()=>{
+    const openDetailPanelForAdd = () => {
         setSelectedFacility(newFacility)
         setDetailPanel(true)
     }
@@ -112,13 +125,12 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
         onCellClick: cellClickHandler,
         onRowsSelect: dummyHandler,
         onRowsDelete: dummyHandler,
-        customToolbar: () => <CustomToolbar addHandler={openDetailPanelForAdd} />
+        customToolbar: () => <CustomToolbar addHandler={openDetailPanelForAdd} refreshHandler={refreshDataHandler} />
     }
 
     return (
         <Page>
             <PageHeader title="Facilities" >
-                <Actionbar mode={actionMode} changeMode={setActionMode} saveBtnHndlr={saveSchoolChangesToDB} refreshHndlr={refreshDataHandler} addDataHandler={addDataHandler} />
             </PageHeader>
 
             <div className={classes.container}>
@@ -130,10 +142,16 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
                         options={options}
                     />
                 </div>
-                {isDetailPanelOpen && <FacilityForm isEditMode={isAddMode} facility={selectedFacility}
-                    panelCloseHandler={closeDetailPanel} />}
+                {isDetailPanelOpen &&
+                    <FacilityForm
+                        isEditMode={isEditMode}
+                        toggleMode={setEditMode}
+                        facility={selectedFacility}
+                        dataChangeHandler={dataChangeHandler}
+                        addressChangeHandler={addressChangeHandler}
+                        saveHandler={saveHandler}
+                        panelCloseHandler={closeDetailPanel} />}
             </div>
-
         </Page>
     )
 }

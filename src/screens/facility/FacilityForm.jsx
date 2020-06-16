@@ -1,8 +1,8 @@
-import React from 'react'
-import { makeStyles, Box, Paper, TextField, Typography, Button } from '@material-ui/core'
+import React, { useEffect } from 'react'
+import { makeStyles, Box, Paper, TextField, Tooltip, IconButton } from '@material-ui/core'
 import Address from '../../common/components/AddressForm';
 import Contact from '../../common/components/ContactForm';
-import ChevronRightIcon from '@material-ui/icons/ArrowRightTwoTone'
+import { Edit, ArrowForwardIos as ChevronRightIcon, Save } from '@material-ui/icons'
 
 const styles = theme => {
     console.log(theme)
@@ -16,6 +16,7 @@ const styles = theme => {
             display: 'flex',
             flexDirection: 'column',
             flexWrap: "wrap",
+            margin: `${theme.spacing(1)}px ${theme.spacing(1)}px`,
             "& >div": {
                 flex: 1
             }
@@ -34,10 +35,24 @@ const styles = theme => {
 }
 const useStyles = makeStyles(styles)
 
-const FacilityForm = ({ isEditMode, facility, panelCloseHandler }) => {
+const FacilityForm = ({ isEditMode, facility, panelCloseHandler, dataChangeHandler, toggleMode, saveHandler, addressChangeHandler }) => {
     const classes = useStyles()
-    console.log("FacilityForm")
+    console.log("FacilityForm: ", isEditMode)
     console.log(facility);
+
+    const stateHandler = e => {
+        e.preventDefault()
+        addressHandler(e)
+    }
+
+    const addressHandler = (event) => {
+        event.preventDefault()
+        addressChangeHandler(event)
+    }
+
+    useEffect(() => {
+
+    }, [facility])
 
     return (
         <Paper className={classes.root} elevation={5} variant="elevation" >
@@ -49,15 +64,37 @@ const FacilityForm = ({ isEditMode, facility, panelCloseHandler }) => {
                     margin="normal"
                     className={classes.textField}
                     value={facility.name || ''}
-                    onChange={() => { }}
+                    onChange={dataChangeHandler}
                     disabled={!isEditMode} />
-                {/* <Button variant="contained" size="small" endIcon={<ChevronRightIcon />}>Close</Button> */}
-                <ChevronRightIcon style={{ fontSize: '3em' }} color="primary" onClick={panelCloseHandler} />
+                <div>
+                    {
+                        !isEditMode &&
+                        <Tooltip title="Edit">
+                            <IconButton onClick={() => { toggleMode(true) }}>
+                                <Edit style={{ color: 'primary' }} />
+                            </IconButton>
+                        </Tooltip>
+                    }
+                    {
+                        isEditMode &&
+                        <Tooltip title="Save">
+                            <IconButton onClick={saveHandler}>
+                                <Save style={{ color: 'primary' }} />
+                            </IconButton>
+                        </Tooltip>
+                    }
+
+                    <Tooltip title="Close">
+                        <IconButton onClick={panelCloseHandler}>
+                            <ChevronRightIcon style={{}} />
+                        </IconButton>
+                    </Tooltip>
+                </div>
             </div>
 
             <div className={classes.contactAddress}>
-                <Address mode={isEditMode} address={facility.address} />
-                <Contact mode={isEditMode} data={facility.contact || {}} contactHandler={() => { }} />
+                <Address isEditMode={isEditMode} address={facility.address} addressHandler={addressHandler} stateHandler={stateHandler} />
+                <Contact isEditMode={isEditMode} data={facility.contact || {}} contactHandler={() => { }} />
             </div>
 
         </Paper>
