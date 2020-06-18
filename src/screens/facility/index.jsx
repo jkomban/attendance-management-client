@@ -8,7 +8,7 @@ import Page from '../../common/components/Page';
 import MUIDatatable from 'mui-datatables';
 import FacilityForm from './FacilityForm';
 import { useEffect } from 'react';
-import { getAllFacilityDetail } from '../../store/actions/facility-action'
+import { getAllFacilityDetail, addFacility } from '../../store/actions/facility-action'
 
 const styles = () => ({
     root: {
@@ -30,11 +30,11 @@ const styles = () => ({
 })
 const useStyles = makeStyles(styles)
 
-const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
+const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData, _addFacility }) => {
     const [isEditMode, setEditMode] = useState(false)
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
-    const newFacility = { address: { state: {} }, contact: {} }
+    const newFacility = { address: { state: {} }, contact: {}, school: schoolData }
     const [selectedFacility, setSelectedFacility] = useState(newFacility)
     const classes = useStyles()
 
@@ -52,13 +52,31 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
     console.log(schoolData)
 
 
-    const saveHandler = () => {
+    const saveHandler = async () => {
         console.log("Save button clicked");
         setEditMode(false)
+        setDetailPanel(false)
+
+        if (selectedFacility.id) {
+            // await _addFacility
+            console.log("Updating facility")
+        } else {
+            await _addFacility(selectedFacility)
+            console.log("Adding facility...")
+        }
+        setInitialLoad(true)
     }
 
     const refreshDataHandler = () => {
         setInitialLoad(true)
+    }
+
+    const contactHandler = (e) => {
+        const temp = { ...selectedFacility }
+        temp.contact[e.target.name] = e.target.value
+        console.log(temp)
+        setSelectedFacility(temp)
+
     }
 
     const addressChangeHandler = (e) => {
@@ -67,6 +85,12 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
         if (e.target.name == "state") {
             temp.address.state = temp.address.state || {}
             temp.address.state.code = e.target.value
+            /** TODO 
+             * Remove hard coding..
+            */
+            temp.address.state.id = 3
+            temp.address.country = temp.address.country || {}
+            temp.address.country.id = 3
         } else {
             temp.address[e.target.name] = e.target.value
         }
@@ -150,6 +174,7 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData }) => {
                         dataChangeHandler={dataChangeHandler}
                         addressChangeHandler={addressChangeHandler}
                         saveHandler={saveHandler}
+                        contactHandler={contactHandler}
                         panelCloseHandler={closeDetailPanel} />}
             </div>
         </Page>
@@ -165,7 +190,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
-        _getFacilityDetails: getAllFacilityDetail
+        _getFacilityDetails: getAllFacilityDetail,
+        _addFacility: addFacility
     }, dispatch)
 }
 

@@ -35,7 +35,8 @@ const styles = theme => {
 }
 const useStyles = makeStyles(styles)
 
-const FacilityForm = ({ isEditMode, facility, panelCloseHandler, dataChangeHandler, toggleMode, saveHandler, addressChangeHandler }) => {
+const FacilityForm = ({ isEditMode, facility, panelCloseHandler,
+    dataChangeHandler, toggleMode, saveHandler, addressChangeHandler, contactHandler }) => {
     const classes = useStyles()
     console.log("FacilityForm: ", isEditMode)
     console.log(facility);
@@ -94,7 +95,7 @@ const FacilityForm = ({ isEditMode, facility, panelCloseHandler, dataChangeHandl
 
             <div className={classes.contactAddress}>
                 <Address isEditMode={isEditMode} address={facility.address} addressHandler={addressHandler} stateHandler={stateHandler} />
-                <Contact isEditMode={isEditMode} data={facility.contact || {}} contactHandler={() => { }} />
+                <Contact isEditMode={isEditMode} data={facility.contact || {}} contactHandler={contactHandler} />
             </div>
 
         </Paper>

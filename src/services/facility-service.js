@@ -16,4 +16,19 @@ const getAllFacilityDetails = async (schoolID) => {
     }
 }
 
-export { getAllFacilityDetails }
+const addFacility = async (facilityDetails) => {
+    let { REACT_APP_BACKEND: backendBase, REACT_APP_NAME_BASE: basePath, REACT_APP_FACILITY_SRVC: serviceName } = Config.getConfig()
+    const serviceURL = `${backendBase}/${basePath}/${serviceName}`
+    console.log(`addFacility() - ${serviceURL}`)
+    let response = {}
+    try {
+        response = await axios.post(serviceURL, facilityDetails)
+        return response.data;
+    } catch (e) {
+        console.error(`ERROR: services.batch.addFacility() : failed ${JSON.stringify(e)}`)
+        console.log(e);
+        throw e;
+    }
+}
+
+export { getAllFacilityDetails, addFacility }

@@ -5,6 +5,8 @@ instance.interceptors.response.use(response => {
     // console.log(response)
     console.log(`notificationInterceptors():: succcess`)
     response['data'] = response.data || {}
+    console.log(response.data)
+    console.log(typeof response.data)
     switch (response.status) {
         case 200:
             response.data.notiType = 'INFO'
@@ -13,7 +15,7 @@ instance.interceptors.response.use(response => {
             response.data.notiType = 'DEFAULT'
             break;
     }
-    // console.log(response)
+    console.log(response)
     return response;
 }, error => {
     console.log(`notificationInterceptors():: error`)

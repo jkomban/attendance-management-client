@@ -1,6 +1,6 @@
 import { deleteStudentDetails, updateStudentDetails, getAllStudentDetails } from './student'
 import { getSchoolDetails, updateSchoolDetails } from './school-sevice'
-import { getAllFacilityDetails } from './facility-service'
+import { getAllFacilityDetails, addFacility } from './facility-service'
 import { getAllBatches, addBatch, updateBatch } from './batch-service';
 import { getAllGrades, addGrade, updateGrade } from './grade-service';
 import ConfigS from './config'
@@ -12,7 +12,7 @@ export {
     getSchoolDetails,
     updateSchoolDetails,
     getAllFacilityDetails,
-    getAllBatches,
+    getAllBatches, addFacility,
     addBatch,
     updateBatch,
     getAllGrades, addGrade, updateGrade,
