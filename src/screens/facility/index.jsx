@@ -8,7 +8,7 @@ import Page from '../../common/components/Page';
 import MUIDatatable from 'mui-datatables';
 import FacilityForm from './FacilityForm';
 import { useEffect } from 'react';
-import { getAllFacilityDetail, addFacility } from '../../store/actions/facility-action'
+import { getAllFacilityDetail, addFacility, updateFacility } from '../../store/actions/facility-action'
 
 const styles = () => ({
     root: {
@@ -30,7 +30,7 @@ const styles = () => ({
 })
 const useStyles = makeStyles(styles)
 
-const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData, _addFacility }) => {
+const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData, _addFacility, _updateFacility }) => {
     const [isEditMode, setEditMode] = useState(false)
     const [isDetailPanelOpen, setDetailPanel] = useState(false)
     const [initialLoad, setInitialLoad] = useState(true)
@@ -54,16 +54,17 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData, _addFaci
 
     const saveHandler = async () => {
         console.log("Save button clicked");
-        setEditMode(false)
-        setDetailPanel(false)
 
         if (selectedFacility.id) {
-            // await _addFacility
+            await _updateFacility(selectedFacility)
             console.log("Updating facility")
         } else {
             await _addFacility(selectedFacility)
             console.log("Adding facility...")
         }
+
+        setEditMode(false)
+        setDetailPanel(false)
         setInitialLoad(true)
     }
 
@@ -82,7 +83,7 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData, _addFaci
     const addressChangeHandler = (e) => {
         console.log(e)
         const temp = { ...selectedFacility }
-        if (e.target.name == "state") {
+        if (e.target.name === "state") {
             temp.address.state = temp.address.state || {}
             temp.address.state.code = e.target.value
             /** TODO 
@@ -133,7 +134,8 @@ const Facility = ({ faciliesData = [], _getFacilityDetails, schoolData, _addFaci
         console.log("Row Clicked")
         // console.log(rowData)
         console.log(rowMeta)
-        setSelectedFacility(faciliesData[rowMeta.dataIndex])
+        const temp = JSON.parse(JSON.stringify(faciliesData[rowMeta.dataIndex]))
+        setSelectedFacility(temp)
         setDetailPanel(true)
     }
 
@@ -191,7 +193,8 @@ const mapStateToProps = (state) => {
 const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
         _getFacilityDetails: getAllFacilityDetail,
-        _addFacility: addFacility
+        _addFacility: addFacility,
+        _updateFacility: updateFacility
     }, dispatch)
 }
 
