@@ -123,6 +123,12 @@ const AppMenu = [
                 text: "Grade",
                 routePath: "/grade",
                 needAuth: true
+            },
+            {
+                listIcon: AccountTree,
+                text: "Admissions",
+                routePath: "/manage/admissions",
+                needAuth: true
             }
         ],
         appTitle: 'Administration',
