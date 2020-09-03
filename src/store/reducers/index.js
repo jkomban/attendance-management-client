@@ -6,10 +6,11 @@ import { facilityReducer, initialFacilityState } from './facilityReducer';
 import { notiReducer, initialNotificationState } from './notiReducer';
 import { batchReducer, initialBatchState } from './batchReducer';
 import { gradeReducer, initialGradeState } from './gradeReducer';
+import { admissionReducer, initialAdmissionState } from './adminssionReducer';
 
 export {
     initialSchoolState, initialStudentsState, initialFacilityState, initalAuthState, initialNotificationState,
-    initialBatchState, initialGradeState
+    initialBatchState, initialGradeState, initialAdmissionState
 };
 
 const rootReducer = combineReducers({
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     facilities: facilityReducer,
     notifications: notiReducer,
     batches: batchReducer,
-    grades: gradeReducer
+    grades: gradeReducer,
+    admissions: admissionReducer
 })
 
 

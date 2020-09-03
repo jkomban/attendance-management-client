@@ -3,7 +3,8 @@ import immutableStateInvariant from 'redux-immutable-state-invariant';
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers, {
     initialStudentsState, initialSchoolState, initialFacilityState,
-    initalAuthState, initialNotificationState, initialBatchState, initialGradeState
+    initalAuthState, initialNotificationState, initialBatchState, initialGradeState,
+    initialAdmissionState
 } from '../reducers';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -14,7 +15,8 @@ const initialState = {
     facilities: initialFacilityState,
     notifications: initialNotificationState,
     batches: initialBatchState,
-    grades: initialGradeState
+    grades: initialGradeState,
+    admissions: initialAdmissionState
 }
 
 export function configureStore(initialState) {

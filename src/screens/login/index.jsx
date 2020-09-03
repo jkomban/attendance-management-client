@@ -17,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { authenticate } from '../../store/actions/auth-actions'
-import { getSchoolDetail } from '../../store/actions/school-actions'
+import { getSchoolDetail as anotherFunction } from '../../store/actions/school-actions'
 
 
 function Copyright() {
@@ -174,7 +174,7 @@ const mapStateToProps = (state) => {
 const mapDispatachToProps = (dispatch) => {
     return bindActionCreators({
         _authenticate: authenticate,
-        _getSchoolDetail: getSchoolDetail
+        _getSchoolDetail: anotherFunction
     }, dispatch)
 }
 

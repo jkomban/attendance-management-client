@@ -3,6 +3,7 @@ import { getSchoolDetails, updateSchoolDetails } from './school-sevice'
 import { getAllFacilityDetails, addFacility, updateFacility } from './facility-service'
 import { getAllBatches, addBatch, updateBatch } from './batch-service';
 import { getAllGrades, addGrade, updateGrade } from './grade-service';
+import { getAllApplications } from './admission-service';
 import ConfigS from './config'
 
 export {
@@ -16,5 +17,6 @@ export {
     addBatch,
     updateBatch,
     getAllGrades, addGrade, updateGrade,
+    getAllApplications,
     ConfigS
 }
